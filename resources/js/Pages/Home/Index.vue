@@ -5,5 +5,5 @@ import { Head } from '@inertiajs/vue3'
 
 <template>
     <Head title="Welcome" />
-    <h1>Welcome</h1>
+    <h1 class="text-red-400 text-center">Welcome</h1>
 </template>
