@@ -1,9 +1,21 @@
 <script setup>
-// import Layout from './Layout'
-import { Head } from '@inertiajs/vue3'
+import SidebarMenu from '../../components/SidebarMenu.vue';
 </script>
 
 <template>
-    <Head title="Welcome" />
-    <h1 class="text-red-400 text-center">Welcome</h1>
+  <div class="flex justify-between">
+    <div class=" flex flex-col flex-1 min-w-0 h-screen overflow-hidden p-5 bg-[#151515] text-white">
+      Content Section
+    </div>
+    <SidebarMenu />
+
+  </div>
 </template>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+</style>
