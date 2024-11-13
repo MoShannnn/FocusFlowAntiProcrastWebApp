@@ -9,33 +9,6 @@
                 class="font-medium cursor-pointer relative hover:text-white"
             >
                 <span
-                    :class="[
-                        !toggleSidebar
-                            ? 'rounded-[8px] ml-5 w-8 h-8'
-                            : 'pl-5 h-10 w-10',
-                        isActive('/')
-                            ? 'bg-[rgba(255,255,255,0.35)]'
-                            : 'group-hover:bg-[rgba(255,255,255,0.2)]',
-                    ]"
-                    class="flex items-center flex-shrink-0 justify-center flex-shrink-0 group-hover:text-white hover:!text-white transition duration-300 relative"
-                >
-                    <span class="flex items-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="18"
-                            height="18"
-                            fill="currentColor"
-                            viewBox="0 0 18 18"
-                            class="w-5 h-5"
-                        >
-                            <path
-                                d="M7.5 15.375v-4.5h3v4.5h3.75v-6h2.25L9 2.625l-7.5 6.75h2.25v6H7.5Z"
-                            ></path>
-                        </svg>
-                    </span>
-                </span>
-
-                <span
                     class="whitespace-nowrap"
                     :class="[
                         isActive('/') && toggleSidebar
@@ -66,7 +39,6 @@ const props = defineProps({
 });
 
 const currentPath = ref(window.location.pathname);
-
 
 const isActive = (route) => {
     return currentPath.value === route;
