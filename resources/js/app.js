@@ -2,6 +2,7 @@ import './bootstrap';
 import { createApp, h} from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3';
 import '../css/app.css';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 createInertiaApp({
     resolve: name => {

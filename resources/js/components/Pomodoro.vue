@@ -1,0 +1,157 @@
+<template>
+    <div class="relative mx-auto">
+        <!--Tabs navigation-->
+        <ul
+            class="mb-5 flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
+            style="width: 86%"
+        >
+            <li
+                v-for="(timer, index) in timers"
+                :key="timer.name"
+                class="flex-auto text-center"
+            >
+                <a
+                    @click="!isRunning && changeCurrentTimer(index)"
+                    :style="{ fontFamily: 'BenchNine' }"
+                    :class="[
+                        'text-3xl leading-tight my-2 block border-b-4 border-t-0 border-transparent px-7 pb-3.5 pt-4',
+                        {
+                            'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white/50 dark:hover:bg-neutral-700/60':
+                                !isRunning,
+                            'border-b-[#A24BF4]': currentTimer === index,
+                            'cursor-not-allowed opacity-50': isRunning,
+                        },
+                    ]"
+                    :aria-selected="currentTimer === index"
+                    :aria-controls="'tabs-' + timer.name"
+                >
+                    {{ timer.name }}
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="relative">
+            <div
+                class="absolute left-1/2 transform -translate-x-1/2 h-[500px] bg-[#320B51]/80 blur-3xl z-0"
+                style="width: 100%"
+            ></div>
+
+            <div
+                v-if="timers[currentTimer]"
+                color="basil"
+                flat
+                class="pa-5 flex-column justify-center items-center relative z-10"
+            >
+                <div
+                    class="flex items-center justify-center border-20 border-[#A24BF4] rounded-lg px-5 shadow-light"
+                >
+                    <span class="timer-text">
+                        {{ displayMinutes }}
+                    </span>
+                    <span class="self-center" style="font-size: 200px">
+                        :
+                    </span>
+                    <span class="timer-text">
+                        {{ displaySeconds }}
+                    </span>
+                </div>
+
+                <div class="flex justify-center my-8">
+                    <div v-if="isRunning" class="flex items-center gap-4 cursor-pointer" style="margin-left: 60px">
+                        <i class="bi bi-pause-btn" @click="stop" style="font-size: 84px"></i>
+
+                        <span
+                            class="material-symbols-outlined text-4xl cursor-pointer"
+                            @click="reset(timers[currentTimer].minutes)"
+                        >
+                            replay
+                        </span>
+                    </div>
+
+                    <div
+                        v-else
+                        class="w-24 h-24 bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer pt-1.5 pl-2"
+                        @click="start"
+                    >
+                        <i class="bi bi-play-fill text-8xl text-[#A24BF4]"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            isRunning: false,
+            timerInstance: null,
+            totalSeconds: 25 * 60, // Default timer for Pomodoro
+            currentTimer: 0,
+            timers: [
+                {
+                    name: "Pomodoro",
+                    minutes: 25,
+                },
+                {
+                    name: "Short Break",
+                    minutes: 5,
+                },
+                {
+                    name: "Long Break",
+                    minutes: 10,
+                },
+            ],
+        };
+    },
+    computed: {
+        displayMinutes() {
+            const minutes = Math.floor(this.totalSeconds / 60);
+            return this.formatTime(minutes);
+        },
+        displaySeconds() {
+            const seconds = this.totalSeconds % 60;
+            return this.formatTime(seconds);
+        },
+    },
+    methods: {
+        formatTime(time) {
+            return time < 10 ? "0" + time : time.toString();
+        },
+        start() {
+            this.stop();
+            this.isRunning = true;
+            this.timerInstance = setInterval(() => {
+                if (this.totalSeconds > 0) {
+                    this.totalSeconds -= 1;
+                } else {
+                    this.stop();
+                }
+            }, 1000);
+        },
+        stop() {
+            this.isRunning = false;
+            clearInterval(this.timerInstance);
+        },
+        reset(minutes) {
+            this.stop();
+            this.totalSeconds = minutes * 60;
+        },
+        changeCurrentTimer(index) {
+            this.currentTimer = index;
+            this.reset(this.timers[index].minutes);
+        },
+    },
+};
+</script>
+
+<style>
+.timer-text {
+    font-size: 300px;
+    line-height: 230px;
+    font-family: "Monomaniac One";
+    margin: 0 20px 50px;
+}
+</style>

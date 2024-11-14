@@ -14,6 +14,12 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            borderWidth: {
+                '20': '20px'
+            },
+            boxShadow: {
+                'light': '10px  20px 50px -15px rgba(120, 10, 223, 0.9)',
+              }
         },
     },
     plugins: [],
