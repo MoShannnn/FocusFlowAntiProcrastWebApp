@@ -1,27 +1,18 @@
 <template>
-    <div class="m-5">
+    <div class="flex flex-row px-4 gap-8 items-center justify-center">
+        <ReportDialog/>
+        <TimerCustomDialog/>
         <ModeToggle />
-
+        <ProfileDialog/>
     </div>
-
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { Button } from "@/components/ui/button";
 import ModeToggle from "@/components/ModeToggle.vue";
-
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import ReportDialog from "@/components/ReportDialog.vue";
+import TimerCustomDialog from "./TimerCustomDialog.vue";
+import ProfileDialog from "./ProfileDialog.vue";
 
 const props = defineProps({
     toggleSidebar: {

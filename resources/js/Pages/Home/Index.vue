@@ -23,11 +23,11 @@
                     class="w-5 h-[65px] left-[1009px] top-[1px] absolute bg-[#a24bf4] rounded-tr-[50px] rounded-br-[50px]"
                 ></div>
             </div>
+
             <Pomodoro />
         </div>
 
         <SidebarMenu />
-        <ModeToggle />
     </div>
 </template>
 

@@ -3,13 +3,10 @@
         <!-- Toggle Button -->
         <Button
             @click="toggleMode"
-            class="px-4 py-2 rounded-lg focus:outline-none transition duration-300"
-            :class="
-                isDarkMode ? 'bg-gray-200 text-black' : 'bg-gray-800 text-white'
-            "
+            class="px-4 py-1.5 rounded-lg hover:bg-accent hover:text-accent-foreground text-xl focus:outline-none transition duration-300"
         >
-            <i class="bi bi-moon" v-if="isDarkMode"></i>
-            <i class="bi bi-brightness-high" v-else></i>
+            <i class="bi bi-moon text-lg" v-if="isDarkMode"></i>
+            <i class="bi bi-brightness-high text-xl" v-else></i>
         </Button>
     </div>
 </template>
