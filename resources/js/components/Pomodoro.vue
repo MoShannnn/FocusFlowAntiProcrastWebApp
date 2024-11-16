@@ -16,7 +16,7 @@
                     :class="[
                         'text-3xl leading-tight my-2 block border-b-4 border-t-0 border-transparent px-7 pb-3.5 pt-4',
                         {
-                            'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white/50 dark:hover:bg-neutral-700/60':
+                            'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white dark:hover:bg-neutral-700/60':
                                 !isRunning,
                             'border-b-[#A24BF4]': currentTimer === index,
                             'cursor-not-allowed opacity-50': isRunning,
@@ -32,27 +32,26 @@
 
         <!-- Tab Content -->
         <div class="relative">
-            <div
+            <!-- <div
                 class="absolute left-1/2 transform -translate-x-1/2 h-[500px] bg-[#320B51]/80 blur-3xl z-0"
                 style="width: 100%"
-            ></div>
+            ></div> -->
 
             <div
                 v-if="timers[currentTimer]"
-                color="basil"
-                flat
                 class="pa-5 flex-column justify-center items-center relative z-10"
             >
                 <div
-                    class="flex items-center justify-center border-20 border-[#A24BF4] rounded-lg px-5 shadow-light"
+                    class="flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light"
+                    style="border-width: 20px"
                 >
-                    <span class="timer-text">
+                    <span class="timer-text dark:text-white">
                         {{ displayMinutes }}
                     </span>
                     <span class="self-center" style="font-size: 200px">
                         :
                     </span>
-                    <span class="timer-text">
+                    <span class="timer-text dark:text-white">
                         {{ displaySeconds }}
                     </span>
                 </div>
@@ -71,10 +70,10 @@
 
                     <div
                         v-else
-                        class="w-24 h-24 bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer pt-1.5 pl-2"
+                        class="w-24 h-24 bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer pt-1.5 pl-2"
                         @click="start"
                     >
-                        <i class="bi bi-play-fill text-8xl text-[#A24BF4]"></i>
+                        <i class="bi bi-play-fill text-7xl text-white dark:text-[#A24BF4]"></i>
                     </div>
                 </div>
             </div>
@@ -153,5 +152,6 @@ export default {
     line-height: 230px;
     font-family: "Monomaniac One";
     margin: 0 20px 50px;
+    color: #A24BF4
 }
 </style>

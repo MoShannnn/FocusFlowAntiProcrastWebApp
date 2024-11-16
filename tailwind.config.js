@@ -84,6 +84,9 @@ export const theme = {
       "collapsible-down": "collapsible-down 0.2s ease-in-out",
       "collapsible-up": "collapsible-up 0.2s ease-in-out",
     },
+    boxShadow: {
+      'light': '10px  20px 50px -15px rgba(120, 10, 223, 0.8)',
+    }
   },
 }
 export const plugins = [animate]

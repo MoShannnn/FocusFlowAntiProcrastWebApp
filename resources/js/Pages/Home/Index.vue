@@ -1,18 +1,18 @@
 <template>
     <div class="flex">
         <div
-            class="flex flex-col flex-1 min-w-0 h-screen overflow-hidden p-5 bg-[#151515] text-white"
+            class="flex flex-col flex-1 min-w-0 h-screen overflow-hidden p-5"
         >
             <h1 class="ml-5 text-2xl" style="font-family: 'Londrina Solid'">
                 Focus Flow
             </h1>
 
-            <div class="w-[1029px] h-[66px] relative" style="margin: 100px auto 50px;">
+            <div class="w-[1029px] h-[66px] relative" style="margin: 120px auto 50px;">
                 <div
-                    class="w-[1024px] h-[66px] left-[5px] top-0 absolute bg-[#151515] rounded-[20px] shadow border-4 border-[#3b1161]"
+                    class="w-[1024px] h-[66px] left-[5px] top-0 absolute rounded-[20px] shadow border-4 border-[#3b1161]"
                 ></div>
                 <div
-                    class="w-[530.94px] left-[331.38px] top-[13px] absolute text-white text-[34px] font-normal tracking-widest"
+                    class="w-[530.94px] left-[331.38px] top-[13px] absolute text-[34px] font-normal tracking-widest"
                 >
                     UI Design for Focus Flow
                 </div>
@@ -27,6 +27,7 @@
         </div>
 
         <SidebarMenu />
+        <ModeToggle />
     </div>
 </template>
 
