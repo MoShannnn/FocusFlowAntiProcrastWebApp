@@ -1,8 +1,8 @@
 <template>
-    <div class="relative mx-auto">
+    <div class="mx-auto flex flex-col gap-10 mt-10">
         <!--Tabs navigation-->
         <ul
-            class="mb-5 flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
+            class="flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
             style="width: 86%"
         >
             <li
@@ -14,11 +14,11 @@
                     @click="!isRunning && changeCurrentTimer(index)"
                     :style="{ fontFamily: 'BenchNine' }"
                     :class="[
-                        'text-3xl leading-tight my-2 block border-b-4 border-t-0 border-transparent px-7 pb-3.5 pt-4',
+                        'text-3xl leading-tight border-b-4 border-t-0 border-transparent px-10 pb-3.5 pt-4',
                         {
                             'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white dark:hover:bg-neutral-700/60':
                                 !isRunning,
-                            'border-b-[#A24BF4]': currentTimer === index,
+                            'border-b-[#A24BF4] dark:bg-zinc-950': currentTimer === index,
                             'cursor-not-allowed opacity-50': isRunning,
                         },
                     ]"
