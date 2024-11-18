@@ -24,10 +24,10 @@
                 ></div>
             </div>
 
-            <Pomodoro />
+            <Pomodoro :timers="timers" :save="save" />
         </div>
 
-        <SidebarMenu />
+        <SidebarMenu :timers="timers" :save="save" />
     </div>
 </template>
 
@@ -39,6 +39,24 @@ export default {
     components: {
         SidebarMenu,
         Pomodoro,
+    },
+    data() {
+        return {
+            timers: [
+                { name: "Pomodoro", minutes: 25 },
+                { name: "Short Break", minutes: 5 },
+                { name: "Long Break", minutes: 10 },
+            ],
+        };
+    },
+    methods: {
+        save(updatedTimers) {
+            // Update the timers array with the new values
+            this.timers = this.timers.map((timer, i) => ({
+                ...timer,
+                minutes: parseInt(updatedTimers[i]),
+            }));
+        },
     },
 };
 </script>
