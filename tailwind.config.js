@@ -86,7 +86,7 @@ export const theme = {
     },
     boxShadow: {
       'light': '10px  20px 50px -15px rgba(120, 10, 223, 0.8)',
-    }
+    },
   },
 }
 export const plugins = [animate]

@@ -1,7 +1,7 @@
 <template>
     <Dialog>
         <DialogTrigger asChild>
-            <Button variant="ghost" class="text-xl" style="font-family: 'Asap'">
+            <Button variant="ghost" class="text-xl font-asap">
                 <span class="material-symbols-outlined"> cadence </span>Report
             </Button>
         </DialogTrigger>

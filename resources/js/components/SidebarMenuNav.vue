@@ -5,14 +5,16 @@
         <ModeToggle />
         <ProfileDialog />
     </div>
+
+    <ToDoList />
 </template>
 
 <script setup>
-import { ref } from "vue";
 import ModeToggle from "@/components/ModeToggle.vue";
 import ReportDialog from "@/components/ReportDialog.vue";
 import TimerCustomDialog from "./TimerCustomDialog.vue";
 import ProfileDialog from "./ProfileDialog.vue";
+import ToDoList from "./ToDoList.vue";
 
 // Define props using `defineProps`
 defineProps({
