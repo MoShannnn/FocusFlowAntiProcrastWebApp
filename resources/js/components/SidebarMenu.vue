@@ -31,13 +31,15 @@
             <SidebarMenuNav
                 v-if="toggleSidebar"
                 :toggle-sidebar="toggleSidebar"
+                :timers="timers" 
+                :save="save"
             />
 
         </div>
     </nav>
 </template>
 
-<script setup>
+<script>
 import { ref } from "vue";
 import SidebarMenuNav from "./SidebarMenuNav.vue";
 
@@ -59,4 +61,28 @@ const handleToggleSidebar = () => {
 window.addEventListener("popstate", () => {
     currentPath.value = window.location.pathname;
 });
+
+export default {
+    props: {
+        timers: {
+            type: Array,
+            required: true,
+        },
+        save: {
+            type: Function,
+            required: true,
+        },
+    },
+    components: {
+        SidebarMenuNav,
+    },
+    setup() {
+        return {
+            toggleSidebar,
+            currentPath,
+            handleToggleSidebar,
+        };
+    },
+};
 </script>
+
