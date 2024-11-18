@@ -14,21 +14,21 @@ import ReportDialog from "@/components/ReportDialog.vue";
 import TimerCustomDialog from "./TimerCustomDialog.vue";
 import ProfileDialog from "./ProfileDialog.vue";
 
-// Define props using `defineProps`
-defineProps({
+const props = defineProps({
     toggleSidebar: {
         type: [Boolean, null],
         required: false,
         default: false,
     },
-    timers: {
-        type: Array,
-        required: true,
-    },
-    save: {
-        type: Function,
-        required: true,
-    },
+});
+
+const currentPath = ref(window.location.pathname);
+
+const isActive = (route) => {
+    return currentPath.value === route;
+};
+
+window.addEventListener("popstate", () => {
+    currentPath.value = window.location.pathname;
 });
 </script>
-

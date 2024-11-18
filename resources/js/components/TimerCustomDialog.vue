@@ -5,35 +5,42 @@
                 <span class="material-symbols-outlined"> alarm </span>Timer
             </Button>
         </DialogTrigger>
-        <DialogContent class="sm:max-w-[425px] xl:min-w-[700px]">
-            <DialogHeader class="text-center">
-                <DialogTitle>Customize Timer</DialogTitle>
+        <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+                <DialogTitle>Report </DialogTitle>
                 <DialogDescription>
-                    Customize each timer sessions
+                    Make changes to your profile here. Click save when you're
+                    done.
                 </DialogDescription>
             </DialogHeader>
-            <div class="grid gap-4 py-4">
-                <div class="grid w-full items-center gap-1.5">
-                    <Label htmlFor="name"> Pomodoro </Label>
+            <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right"> Name </Label>
                     <Input
-                        v-for="(timer, i) in updatedTimers"
-                        :key="i"
-                        v-model="updatedTimers[i]"
+                        id="name"
+                        defaultValue="Pedro Duarte"
+                        className="col-span-3"
+                    />
+                </div>
+                <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                        Username
+                    </Label>
+                    <Input
+                        id="username"
+                        defaultValue="@peduarte"
+                        className="col-span-3"
                     />
                 </div>
             </div>
             <DialogFooter>
-                <Button @click="save(updatedTimers)" type="submit">
-                    Save changes
-                </Button>
+                <Button type="submit">Save changes</Button>
             </DialogFooter>
         </DialogContent>
     </Dialog>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-
 import { Button } from "@/components/ui/button";
 
 import {
@@ -47,24 +54,4 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-// Props
-defineProps({
-    timers: {
-        type: Array,
-        required: true,
-    },
-    save: {
-        type: Function,
-        required: true,
-    },
-});
-
-// Reactive Data
-const updatedTimers = ref([]);
-
-// Lifecycle Hook
-onMounted(() => {
-    updatedTimers.value = timers.map((timer) => timer.minutes);
-});
 </script>

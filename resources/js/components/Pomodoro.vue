@@ -18,8 +18,7 @@
                         {
                             'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white dark:hover:bg-neutral-700/60':
                                 !isRunning,
-                            'border-b-[#A24BF4] dark:bg-zinc-950':
-                                currentTimer === index,
+                            'border-b-[#A24BF4] dark:bg-zinc-950': currentTimer === index,
                             'cursor-not-allowed opacity-50': isRunning,
                         },
                     ]"
@@ -58,16 +57,8 @@
                 </div>
 
                 <div class="flex justify-center my-8">
-                    <div
-                        v-if="isRunning"
-                        class="flex items-center gap-4 cursor-pointer"
-                        style="margin-left: 60px"
-                    >
-                        <i
-                            class="bi bi-pause-btn"
-                            @click="stop"
-                            style="font-size: 84px"
-                        ></i>
+                    <div v-if="isRunning" class="flex items-center gap-4 cursor-pointer" style="margin-left: 60px">
+                        <i class="bi bi-pause-btn" @click="stop" style="font-size: 84px"></i>
 
                         <span
                             class="material-symbols-outlined text-4xl cursor-pointer"
@@ -82,9 +73,7 @@
                         class="w-24 h-24 bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer pt-1.5 pl-2"
                         @click="start"
                     >
-                        <i
-                            class="bi bi-play-fill text-7xl text-white dark:text-[#A24BF4]"
-                        ></i>
+                        <i class="bi bi-play-fill text-7xl text-white dark:text-[#A24BF4]"></i>
                     </div>
                 </div>
             </div>
@@ -94,23 +83,26 @@
 
 <script>
 export default {
-    props: {
-        timers: {
-            type: Array,
-            required: true,
-        },
-        save: {
-            type: Function,
-            required: true,
-        },
-    },
     data() {
         return {
             isRunning: false,
             timerInstance: null,
             totalSeconds: 25 * 60, // Default timer for Pomodoro
             currentTimer: 0,
-           
+            timers: [
+                {
+                    name: "Pomodoro",
+                    minutes: 25,
+                },
+                {
+                    name: "Short Break",
+                    minutes: 5,
+                },
+                {
+                    name: "Long Break",
+                    minutes: 10,
+                },
+            ],
         };
     },
     computed: {
@@ -160,6 +152,6 @@ export default {
     line-height: 230px;
     font-family: "Monomaniac One";
     margin: 0 20px 50px;
-    color: #a24bf4;
+    color: #A24BF4
 }
 </style>
