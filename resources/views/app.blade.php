@@ -27,7 +27,7 @@
     </style>
 </head>
 
-<body style="margin: 0; padding: 0;" class="dark:bg-zinc-950">
+<body style="margin: 0 !important; padding: 0 !important;" class="dark:bg-zinc-950">
     @inertia
 </body>
 

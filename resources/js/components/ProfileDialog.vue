@@ -5,7 +5,7 @@
                 <i class="bi bi-person-circle text-5xl text-zinc-700 dark:text-gray-300"></i>
             </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent class="sm:max-w-[425px] xl:min-w-[700px]">
             <DialogHeader>
                 <DialogTitle>Report </DialogTitle>
                 <DialogDescription>
@@ -13,23 +13,23 @@
                     done.
                 </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right"> Name </Label>
+            <div class="grid gap-4 py-4">
+                <div class="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" class="text-right"> Name </Label>
                     <Input
                         id="name"
                         defaultValue="Pedro Duarte"
-                        className="col-span-3"
+                        class="col-span-3"
                     />
                 </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
+                <div class="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" class="text-right">
                         Username
                     </Label>
                     <Input
                         id="username"
                         defaultValue="@peduarte"
-                        className="col-span-3"
+                        class="col-span-3"
                     />
                 </div>
             </div>
