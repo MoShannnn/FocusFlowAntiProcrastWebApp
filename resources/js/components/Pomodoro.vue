@@ -20,7 +20,7 @@
                                 !isRunning,
                             'border-b-[#A24BF4] dark:bg-zinc-950':
                                 currentTimer === index,
-                            'cursor-not-allowed opacity-50': isRunning,
+                            'cursor-not-allowed opacity-80': isRunning,
                         },
                     ]"
                     :aria-selected="currentTimer === index"
@@ -33,14 +33,14 @@
 
         <!-- Tab Content -->
         <div class="relative">
-            <!-- <div
-                class="absolute left-1/2 transform -translate-x-1/2 h-[500px] bg-[#320B51]/80 blur-3xl z-0"
+            <div
+                class="absolute left-1/2 transform -translate-x-1/2 h-[460px] dark:bg-[#320B51]/80 blur-3xl z-0"
                 style="width: 100%"
-            ></div> -->
+            ></div>
 
             <div
                 v-if="timers[currentTimer]"
-                class="pa-5 flex-column justify-center items-center relative z-10"
+                class="pa-5 flex-column justify-center items-center relative"
             >
                 <div
                     class="flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light"

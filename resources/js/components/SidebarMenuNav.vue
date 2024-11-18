@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-row px-4 gap-8 items-center justify-center">
-        <ReportDialog/>
-        <TimerCustomDialog/>
+        <ReportDialog />
+        <TimerCustomDialog :timers="timers" :save="save" />
         <ModeToggle />
-        <ProfileDialog/>
+        <ProfileDialog />
     </div>
 </template>
 
@@ -31,4 +31,3 @@ defineProps({
     },
 });
 </script>
-

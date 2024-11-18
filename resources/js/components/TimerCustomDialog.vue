@@ -5,32 +5,17 @@
                 <span class="material-symbols-outlined"> alarm </span>Timer
             </Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent class="sm:max-w-[425px] xl:min-w-[700px]">
             <DialogHeader>
-                <DialogTitle>Report </DialogTitle>
+                <DialogTitle>Customize Timer </DialogTitle>
                 <DialogDescription>
-                    Make changes to your profile here. Click save when you're
-                    done.
+                    Adjust each timer sessions for your needs
                 </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right"> Name </Label>
-                    <Input
-                        id="name"
-                        defaultValue="Pedro Duarte"
-                        className="col-span-3"
-                    />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
-                        Username
-                    </Label>
-                    <Input
-                        id="username"
-                        defaultValue="@peduarte"
-                        className="col-span-3"
-                    />
+            <div class="grid gap-4 py-4">
+                <div class="grid w-full items-center gap-1.5" v-for="(timer, i) in updatedTimers" :key="i">
+                    <Label :for="'timer-' + i">Timer {{ i + 1 }}</Label>
+                    <Input v-model="timer.value" :placeholder="`Timer ${i + 1}`" />
                 </div>
             </div>
             <DialogFooter>
@@ -54,4 +39,16 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+defineProps({
+    timers: {
+        type: Array,
+        required: true,
+    },
+    save: {
+        type: Function,
+        required: true,
+    },
+});
+
 </script>
