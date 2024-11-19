@@ -1,9 +1,9 @@
 <template>
-    <div class="mx-auto flex flex-col gap-10 mt-10">
+    <div class="mx-auto flex flex-col gap-5">
         <!--Tabs navigation-->
         <ul
             class="flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
-            style="width: 86%"
+            style="width: 80%"
         >
             <li
                 v-for="(timer, index) in timers"
@@ -14,7 +14,7 @@
                     @click="!isRunning && changeCurrentTimer(index)"
                     :style="{ fontFamily: 'BenchNine' }"
                     :class="[
-                        'text-3xl leading-tight border-b-4 border-t-0 border-transparent px-10 pb-3.5 pt-4',
+                        'text-2xl leading-tight border-b-4 border-t-0 border-transparent px-10 pb-3.5 pt-4',
                         {
                             'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white dark:hover:bg-neutral-700/60':
                                 !isRunning,
@@ -31,62 +31,48 @@
             </li>
         </ul>
 
-        <!-- Tab Content -->
-        <div class="relative">
-            <div
-                class="absolute -top-10 left-1/2 transform -translate-x-1/2 h-[460px] dark:bg-[#320B51]/80 blur-3xl z-0"
-                style="width: 100%"
-            ></div>
+        <div
+            v-if="timers[currentTimer]"
+            class="flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light dark:shadow-dark dark:text-shadow mx-auto"
+            style="border-width: 20px; width: 96%"
+        >
+            <span class="timer-text dark:text-white">
+                {{ displayMinutes }}
+            </span>
+            <span class="self-center" style="font-size: 160px"> : </span>
+            <span class="timer-text dark:text-white">
+                {{ displaySeconds }}
+            </span>
+        </div>
 
+        <div class="flex justify-center">
             <div
-                v-if="timers[currentTimer]"
-                class="pa-5 flex-column justify-center items-center relative"
+                v-if="isRunning"
+                class="flex items-center gap-4 cursor-pointer"
+                style="margin-left: 60px"
             >
-                <div
-                    class="flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light"
-                    style="border-width: 20px"
+                <i
+                    class="bi bi-pause-btn"
+                    @click="stop"
+                    style="font-size: 84px"
+                ></i>
+
+                <span
+                    class="material-symbols-outlined text-4xl cursor-pointer"
+                    @click="reset(timers[currentTimer].minutes)"
                 >
-                    <span class="timer-text dark:text-white">
-                        {{ displayMinutes }}
-                    </span>
-                    <span class="self-center" style="font-size: 200px">
-                        :
-                    </span>
-                    <span class="timer-text dark:text-white">
-                        {{ displaySeconds }}
-                    </span>
-                </div>
+                    replay
+                </span>
+            </div>
 
-                <div class="flex justify-center my-8">
-                    <div
-                        v-if="isRunning"
-                        class="flex items-center gap-4 cursor-pointer"
-                        style="margin-left: 60px"
-                    >
-                        <i
-                            class="bi bi-pause-btn"
-                            @click="stop"
-                            style="font-size: 84px"
-                        ></i>
-
-                        <span
-                            class="material-symbols-outlined text-4xl cursor-pointer"
-                            @click="reset(timers[currentTimer].minutes)"
-                        >
-                            replay
-                        </span>
-                    </div>
-
-                    <div
-                        v-else
-                        class="w-24 h-24 bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer pt-1.5 pl-2"
-                        @click="start"
-                    >
-                        <i
-                            class="bi bi-play-fill text-7xl text-white dark:text-[#A24BF4]"
-                        ></i>
-                    </div>
-                </div>
+            <div
+                v-else
+                class="w-22 h-22 bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer pt-1.5 pl-2"
+                @click="start"
+            >
+                <i
+                    class="bi bi-play-fill text-7xl text-white dark:text-[#A24BF4]"
+                ></i>
             </div>
         </div>
     </div>
@@ -110,7 +96,6 @@ export default {
             timerInstance: null,
             totalSeconds: 25 * 60, // Default timer for Pomodoro
             currentTimer: 0,
-           
         };
     },
     computed: {
@@ -156,8 +141,8 @@ export default {
 
 <style>
 .timer-text {
-    font-size: 300px;
-    line-height: 230px;
+    font-size: 250px;
+    line-height: 200px;
     font-family: "Monomaniac One";
     margin: 0 20px 50px;
     color: #a24bf4;

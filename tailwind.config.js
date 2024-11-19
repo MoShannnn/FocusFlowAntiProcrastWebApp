@@ -86,6 +86,7 @@ export const theme = {
     },
     boxShadow: {
       'light': '10px  20px 50px -15px rgba(120, 10, 223, 0.8)',
+      'dark': '0px  12px 160px 4px rgba(120, 10, 223, 0.6)',
     },
   },
 }

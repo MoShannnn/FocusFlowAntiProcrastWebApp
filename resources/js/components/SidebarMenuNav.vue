@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-row px-4 gap-8 items-center justify-center">
+    <div class="flex flex-row flex-wrap xl:px-4 lg:gap-4 2xl:gap-8 items-center justify-center">
         <ReportDialog />
         <TimerCustomDialog :timers="timers" :save="save" />
         <ModeToggle />

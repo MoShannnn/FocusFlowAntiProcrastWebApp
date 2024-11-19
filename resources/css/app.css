@@ -79,4 +79,8 @@
   .font-asap {
     font-family: 'Asap'
   }
+
+  .text-shadow {
+    text-shadow: 1px 1px 2px black, 0 0 25px #a24bf4ad, 0 0 5px #780adfe2;
+  }
 }

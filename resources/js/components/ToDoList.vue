@@ -16,9 +16,21 @@
                 <button class="delete" @click="removeTodo(todo)">Delete</button>
             </div>
         </div>
-        <form v-if="showInput" class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl" @submit.prevent="addTodo">
+
+        <!-- Add New Task Form -->
+        <form
+            v-if="showInput"
+            class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl"
+            @submit.prevent="addTodo"
+        >
             <div class="grid gap-4">
-                <Input class="flex-1 h-12 text-2xl" v-model="input_content" />
+
+                <Input
+                    class="flex-1 h-14 text-2xl outline-none ring-2 ring-ring ring-offset-2"
+                    v-model="input_content"
+                    autofocus
+                />
+
                 <div class="flex flex-row justify-end gap-4">
                     <Button
                         type="submit"
@@ -34,13 +46,14 @@
                         >Cancel</Button
                     >
                 </div>
+
             </div>
         </form>
 
         <Button
             v-else
             @click="toggleInput"
-            class="w-full flex items-center p-7 text-xl font-asap text-black border-4 border-dashed border-spacing border-[#B3AEAE] bg-[#FFFBFF] hover:bg-neutral-100 dark:text-white dark:bg-[#2f2929]/50 dark:hover:bg-[#2f2929]/40 dark:border-[#D3D3D3]/50"
+            class="w-full flex items-center p-7 text-xl font-asap text-black border-4 border-dashed border-spacing border-[#B3AEAE]/50 bg-[#FFFBFF] hover:bg-neutral-50 dark:text-white dark:bg-[#2f2929]/50 dark:hover:bg-[#2f2929]/40 dark:border-[#D3D3D3]/50"
         >
             Add new task
             <span class="material-symbols-outlined"> add </span>

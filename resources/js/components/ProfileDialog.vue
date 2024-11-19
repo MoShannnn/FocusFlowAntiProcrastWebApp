@@ -2,7 +2,7 @@
     <Dialog>
         <DialogTrigger asChild>
             <Button variant="ghost" class="w-16 h-16">
-                <i class="bi bi-person-circle text-5xl text-zinc-700 dark:text-gray-300"></i>
+                <i class="bi bi-person-circle text-4xl text-zinc-700 dark:text-gray-300"></i>
             </Button>
         </DialogTrigger>
         <DialogContent class="sm:max-w-[425px] xl:min-w-[700px]">

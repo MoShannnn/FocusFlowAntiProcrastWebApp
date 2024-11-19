@@ -1,6 +1,6 @@
 <template>
     <nav
-        :class="toggleSidebar ? 'w-4/12' : 'w-[4vh]'"
+        :class="toggleSidebar ? 'xl:w-4/12' : 'w-[4vh]'"
         class="relative z-[20] h-[100vh] flex-shrink-0 isolate transition-all duration-200"
     >
         <!-- Border Wrapper -->
@@ -9,15 +9,15 @@
             class="absolute left-0 bottom-0 w-full border-l border-black dark:border-white"
         ></div>
 
-        <div class="h-full mt-3">
+        <div class="h-full">
             
             <div
                 :class="
                     toggleSidebar
-                        ? '-left-10'
+                        ? 'xl:-left-10 md:-left-20'
                         : '-left-5 border-2 border-[#762DBB] bg-black dark:bg-white rounded-full'
                 "
-                class="absolute cursor-pointer top-6 w-10 h-10 flex items-center justify-center"
+                class="absolute cursor-pointer top-3 w-10 h-10 flex items-center justify-center"
                 @click="handleToggleSidebar"
             >
                 <span
