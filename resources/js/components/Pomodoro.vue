@@ -147,7 +147,7 @@ export default {
 
 @media (min-width: 1280px) {
     .timer-text {
-        font-size: 250px;
+        font-size: 220px;
         line-height: 200px;
         margin: 0 20px 50px;
     }
