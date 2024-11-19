@@ -1,9 +1,9 @@
 <template>
-    <div class="mx-auto flex flex-col gap-5">
+    <div class="mx-auto flex flex-col gap-5 w-full">
         <!--Tabs navigation-->
         <ul
             class="flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
-            style="width: 80%"
+            style="width: 72%"
         >
             <li
                 v-for="(timer, index) in timers"
@@ -14,7 +14,7 @@
                     @click="!isRunning && changeCurrentTimer(index)"
                     :style="{ fontFamily: 'BenchNine' }"
                     :class="[
-                        'text-2xl leading-tight border-b-4 border-t-0 border-transparent px-10 pb-3.5 pt-4',
+                        'text-2xl leading-tight border-b-4 border-t-0 border-transparent px-6 pb-3.5 pt-4',
                         {
                             'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white dark:hover:bg-neutral-700/60':
                                 !isRunning,
@@ -33,13 +33,13 @@
 
         <div
             v-if="timers[currentTimer]"
-            class="flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light dark:shadow-dark dark:text-shadow mx-auto"
-            style="border-width: 20px; width: 96%"
+            class="countdown-timer flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light dark:shadow-dark dark:text-shadow mx-auto"
+            style="width: 78%"
         >
             <span class="timer-text dark:text-white">
                 {{ displayMinutes }}
             </span>
-            <span class="self-center" style="font-size: 160px"> : </span>
+            <span class="self-center two-dot"> : </span>
             <span class="timer-text dark:text-white">
                 {{ displaySeconds }}
             </span>
@@ -141,10 +141,38 @@ export default {
 
 <style>
 .timer-text {
-    font-size: 250px;
-    line-height: 200px;
     font-family: "Monomaniac One";
-    margin: 0 20px 50px;
     color: #a24bf4;
+}
+
+@media (min-width: 1280px) {
+    .timer-text {
+        font-size: 250px;
+        line-height: 200px;
+        margin: 0 20px 50px;
+    }
+
+    .two-dot {
+        font-size: 160px;
+    }
+
+    .countdown-timer {
+        border-width: 20px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .timer-text {
+        font-size: 145px;
+        line-height: 140px;
+        margin: 0 20px 30px;
+    }
+    .two-dot {
+        font-size: 100px;
+        margin-bottom: 10px;
+    }
+    .countdown-timer {
+        border-width: 16px;
+    }
 }
 </style>
