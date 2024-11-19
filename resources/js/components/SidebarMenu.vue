@@ -9,7 +9,7 @@
             class="absolute left-0 bottom-0 w-full border-l border-black dark:border-white"
         ></div>
 
-        <div class="h-full">
+        <div class="h-full pt-3">
             
             <div
                 :class="

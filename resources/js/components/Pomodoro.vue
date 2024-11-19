@@ -2,7 +2,7 @@
     <div class="mx-auto flex flex-col gap-5 w-full">
         <!--Tabs navigation-->
         <ul
-            class="flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
+            class="max-w-[720px] flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
             style="width: 72%"
         >
             <li
@@ -33,7 +33,7 @@
 
         <div
             v-if="timers[currentTimer]"
-            class="countdown-timer flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light dark:shadow-dark dark:text-shadow mx-auto"
+            class="countdown-timer max-w-[800px] flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light dark:shadow-dark dark:text-shadow mx-auto"
             style="width: 78%"
         >
             <span class="timer-text dark:text-white">

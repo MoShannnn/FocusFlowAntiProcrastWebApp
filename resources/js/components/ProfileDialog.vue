@@ -1,58 +1,37 @@
 <template>
-    <Dialog>
-        <DialogTrigger asChild>
-            <Button variant="ghost" class="w-16 h-16">
-                <i class="bi bi-person-circle text-4xl text-zinc-700 dark:text-gray-300"></i>
+    <DropdownMenu>
+          <DropdownMenuTrigger as-child>
+            <Button variant="secondary" size="icon" class="rounded-full">
+                <i class="bi bi-person-circle text-2xl text-zinc-600 dark:text-gray-300"></i>
+                <span class="sr-only">Toggle user menu</span>
             </Button>
-        </DialogTrigger>
-        <DialogContent class="sm:max-w-[425px] xl:min-w-[700px]">
-            <DialogHeader>
-                <DialogTitle>Report </DialogTitle>
-                <DialogDescription>
-                    Make changes to your profile here. Click save when you're
-                    done.
-                </DialogDescription>
-            </DialogHeader>
-            <div class="grid gap-4 py-4">
-                <div class="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" class="text-right"> Name </Label>
-                    <Input
-                        id="name"
-                        defaultValue="Pedro Duarte"
-                        class="col-span-3"
-                    />
-                </div>
-                <div class="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" class="text-right">
-                        Username
-                    </Label>
-                    <Input
-                        id="username"
-                        defaultValue="@peduarte"
-                        class="col-span-3"
-                    />
-                </div>
-            </div>
-            <DialogFooter>
-                <Button type="submit">Save changes</Button>
-            </DialogFooter>
-        </DialogContent>
-    </Dialog>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem @click="logout">Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
 </template>
 
 <script setup>
 import { Button } from "@/components/ui/button";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { ref } from "vue";
+import { useForm } from "@inertiajs/vue3";
+//Form
+const form = useForm({});
 
+const errors = ref({});
+
+const logout = () => {
+    form.post("/logout", {
+        onError: (error) => {
+            errors.value = error;
+        },
+    });
+};
 </script>
