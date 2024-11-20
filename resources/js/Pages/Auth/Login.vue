@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 //Form
 const form = useForm({
     email: "",
@@ -76,7 +76,7 @@ const submit = () => {
                     </div>
                     <div class="mt-4 text-center text-sm">
                         Don't have an account?
-                        <a href="#" class="underline"> Sign up </a>
+                        <Link href="/signup" class="underline"> Sign up </Link>
                     </div>
                 </CardContent>
             </form>

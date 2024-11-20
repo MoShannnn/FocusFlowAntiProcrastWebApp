@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 //Form
 const form = useForm({
     name: "",
@@ -97,13 +97,10 @@ const submit = () => {
                         <Button type="submit" class="w-full">
                             Create an account
                         </Button>
-                        <Button variant="outline" class="w-full">
-                            Sign up with GitHub
-                        </Button>
                     </div>
                     <div class="mt-4 text-center text-sm">
                         Already have an account?
-                        <a href="#" class="underline"> Sign in </a>
+                        <Link href="/login" class="underline"> Sign in </Link>
                     </div>
                 </CardContent>
             </form>

@@ -12,6 +12,7 @@
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem @click="logout">Logout</DropdownMenuItem>
+            <DropdownMenuItem><Link href="/login">Login</Link></DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 </template>
@@ -21,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, Link } from "@inertiajs/vue3";
 //Form
 const form = useForm({});
 
