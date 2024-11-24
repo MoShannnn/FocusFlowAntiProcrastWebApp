@@ -17,7 +17,6 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Admin',
             'email' => 'admin@gmail.com',
-            'email_verified_at' => now(),
             'password' => Hash::make('123123123'), // Change 'yourpassword' to your desired password
             'role' => 'admin',
             'profile_photo_path' => null,
