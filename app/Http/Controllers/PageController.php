@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class HomeController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,5 +13,10 @@ class HomeController extends Controller
     public function index()
     {
         return Inertia::render('Index');
+    }
+
+    public function settings()
+    {
+        return Inertia::render('Setting/Profile');
     }
 }

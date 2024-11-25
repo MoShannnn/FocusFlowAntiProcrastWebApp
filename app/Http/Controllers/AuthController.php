@@ -90,7 +90,7 @@ class AuthController extends Controller
      */
     public function resetPassword()
     {
-        return Inertia::render('Auth/ResetPassword');
+        return Inertia::render('Setting/ResetPassword');
     }
 
     public function updatePassword(Request $request)
