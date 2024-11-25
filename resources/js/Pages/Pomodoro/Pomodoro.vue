@@ -2,7 +2,7 @@
     <div class="mx-auto flex flex-col gap-5 w-full">
         <!--Tabs navigation-->
         <ul
-            class="max-w-[720px] flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto"
+            class="max-w-[720px] flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto timer-mode"
             style="width: 72%"
         >
             <li
@@ -14,7 +14,7 @@
                     @click="!isRunning && changeCurrentTimer(index)"
                     :style="{ fontFamily: 'BenchNine' }"
                     :class="[
-                        'text-2xl leading-tight border-b-4 border-t-0 border-transparent px-6 pb-3.5 pt-4',
+                        'xl:text-2xl lg:text-xl leading-tight border-b-4 border-t-0 border-transparent px-6 pb-3.5 pt-4',
                         {
                             'cursor-pointer hover:bg-neutral-100 focus:isolate focus:border-transparent dark:text-white dark:hover:bg-neutral-700/60':
                                 !isRunning,
@@ -48,17 +48,16 @@
         <div class="flex justify-center">
             <div
                 v-if="isRunning"
-                class="flex items-center gap-4 cursor-pointer"
-                style="margin-left: 60px"
+                class="flex items-center gap-4 cursor-pointer mt-3 timer-running"
+                style="margin-left: 50px"
             >
                 <i
-                    class="bi bi-pause-btn"
+                    class="bi bi-pause-btn text-7xl stop-icon"
                     @click="stop"
-                    style="font-size: 84px"
                 ></i>
 
                 <span
-                    class="material-symbols-outlined text-4xl cursor-pointer"
+                    class="material-symbols-outlined text-4xl cursor-pointer reset-icon"
                     @click="reset(timers[currentTimer].minutes)"
                 >
                     replay
@@ -67,11 +66,11 @@
 
             <div
                 v-else
-                class="w-22 h-22 bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer pt-1.5 pl-2"
+                class="bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer p-1 pl-3"
                 @click="start"
             >
                 <i
-                    class="bi bi-play-fill text-7xl text-white dark:text-[#A24BF4]"
+                    class="bi bi-play-fill text-7xl text-white dark:text-[#A24BF4] play-icon"
                 ></i>
             </div>
         </div>
@@ -200,6 +199,33 @@ export default {
     }
     .countdown-timer {
         border-width: 16px;
+    }
+    .timer-mode {
+        margin: 30px auto !important;
+    }
+    .play-icon {
+        font-size: 56px !important;
+    }
+    .stop-icon {
+        font-size: 56px !important;
+    }
+    .reset-icon {
+        font-size: 22px !important;
+    }
+    .timer-running {
+        margin-left: 40px !important;
+    }
+}
+
+@media (max-width: 860px) {
+    .timer-text {
+        font-size: 90px;
+        line-height: 80px;
+        margin: 0 20px 20px;
+    }
+    .two-dot {
+        font-size: 100px;
+        margin-bottom: 10px;
     }
 }
 </style>

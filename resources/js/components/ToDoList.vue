@@ -1,6 +1,6 @@
 <template>
     <div class="w-full absolute left-0 bottom-0 h-[87vh] px-10">
-        <h1 class="font-asap text-3xl font-bold mb-5">Tasks</h1>
+        <h1 class="font-asap xl:text-3xl lg:text-2xl text-lg font-bold mb-5">Tasks</h1>
 
         <div
             v-for="todo in todos_asc"
@@ -9,11 +9,11 @@
             <Checkbox class="flex-none" />
             <Input
                 type="text"
-                class="flex-1 border-none h-6 font-asap text-xl px-1"
+                class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
                 v-model="todo.content"
             />
             <div class="actions">
-                <button class="delete" @click="removeTodo(todo)">Delete</button>
+                <button class="delete xl:text-base text-xs" @click="removeTodo(todo)">Delete</button>
             </div>
         </div>
 
@@ -26,7 +26,7 @@
             <div class="grid gap-4">
 
                 <Input
-                    class="flex-1 text-xl outline-none ring-2 ring-ring ring-offset-2"
+                    class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
                     v-model="input_content"
                     autofocus
                 />
@@ -51,7 +51,7 @@
         <Button
             v-else
             @click="toggleInput"
-            class="w-full flex items-center h-12 text-lg font-asap text-black border-2 border-dashed border-spacing border-[#B3AEAE]/50 bg-[#FFFBFF] hover:bg-neutral-50 dark:text-white dark:bg-[#2f2929]/50 dark:hover:bg-[#2f2929]/40 dark:border-[#D3D3D3]/50"
+            class="w-full flex items-center h-12 xl:text-xl lg:text-lg font-asap text-black border-2 border-dashed border-spacing border-[#B3AEAE]/50 bg-[#FFFBFF] hover:bg-neutral-50 dark:text-white dark:bg-[#2f2929]/50 dark:hover:bg-[#2f2929]/40 dark:border-[#D3D3D3]/50"
         >
             Add new task
             <span class="material-symbols-outlined"> add </span>
