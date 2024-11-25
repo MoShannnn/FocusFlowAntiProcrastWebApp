@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -12,12 +13,16 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/signup', [AuthController::class, 'create'])->name('user.create');
 });
 
-Route::get('/', [PageController::class, 'index'])->name('home');
-
-Route::get('/settings', [PageController::class, 'settings'])->name('settings');
-
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/reset-password', [AuthController::class, 'resetPassword'])->name('resetPassword');
+Route::get('/', [PageController::class, 'index'])->name('home');
 
-Route::post('/reset-password', [AuthController::class, 'updatePassword'])->name('updatePassword');
+// Setting & Profile
+Route::get('/settings', [UserController::class, 'settings'])->name('settings');
+
+Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('updateProfile');
+
+// Reset Password
+Route::get('/reset-password', [UserController::class, 'resetPassword'])->name('resetPassword');
+
+Route::post('/reset-password', [UserController::class, 'updatePassword'])->name('updatePassword');

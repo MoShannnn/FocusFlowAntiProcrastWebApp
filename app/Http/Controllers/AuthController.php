@@ -6,7 +6,6 @@ use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -83,38 +82,5 @@ class AuthController extends Controller
         $request->session()->invalidate();
 
         return redirect()->route('login');
-    }
-
-    /**
-     * Reset Password
-     */
-    public function resetPassword()
-    {
-        return Inertia::render('Setting/ResetPassword');
-    }
-
-    public function updatePassword(Request $request)
-    {
-        // Validate the input fields
-        $validatedData = $request->validate([
-            'password_previous' => ['required', 'string'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-
-        $user = auth()->user(); // Get the authenticated user
-
-        // Check if the previous password is correct
-        if (!Hash::check($validatedData['password_previous'], $user->password)) {
-            return redirect()->back()->withErrors([
-                'password_previous' => 'The previous password is incorrect.',
-            ])->withInput();
-        }
-
-        // Update the user's password
-        $user->update([
-            'password' => $validatedData['password'],
-        ]);
-
-        return redirect()->route('home')->with('success', 'Password updated successfully!');
     }
 }

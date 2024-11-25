@@ -14,9 +14,4 @@ class PageController extends Controller
     {
         return Inertia::render('Index');
     }
-
-    public function settings()
-    {
-        return Inertia::render('Setting/Profile');
-    }
 }
