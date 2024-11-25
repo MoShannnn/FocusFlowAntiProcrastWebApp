@@ -3,7 +3,7 @@
         <ReportDialog />
         <TimerCustomDialog :timers="timers" :save="save" />
         <ModeToggle />
-        <ProfileDialog />
+        <AccountManagement />
     </div>
 
     <ToDoList />
@@ -13,7 +13,7 @@
 import ModeToggle from "@/components/ModeToggle.vue";
 import ReportDialog from "@/components/ReportDialog.vue";
 import TimerCustomDialog from "@/components/TimerCustomDialog.vue";
-import ProfileDialog from "@/components/ProfileDialog.vue";
+import AccountManagement from "@/components/AccountManagement.vue";
 import ToDoList from "@/components/ToDoList.vue";
 
 // Define props using `defineProps`

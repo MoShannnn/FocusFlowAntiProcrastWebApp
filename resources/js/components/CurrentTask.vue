@@ -13,7 +13,7 @@
             class="w-5 h-[50px] left-[20px] top-[50px] absolute origin-top-left -rotate-180 bg-[#a24bf4] rounded-tr-[50px] rounded-br-[50px]"
         ></div>
         <div
-            class="w-5 h-[50px] right-[0px] top-[1px] absolute bg-[#a24bf4] rounded-tr-[50px] rounded-br-[50px]"
+            class="w-5 h-[50px] right-[0px] top-[0px] absolute bg-[#a24bf4] rounded-tr-[50px] rounded-br-[50px]"
         ></div>
     </div>
 </template>

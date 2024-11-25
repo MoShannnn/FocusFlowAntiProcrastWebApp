@@ -14,8 +14,7 @@ import { ref } from "vue";
 import { useForm, Link } from "@inertiajs/vue3";
 //Form
 const form = useForm({
-    name: "",
-    email: "",
+    password_previous: "",
     password: "",
     password_confirmation: "",
 });
@@ -23,50 +22,43 @@ const form = useForm({
 const errors = ref({});
 
 const submit = () => {
-    form.post("/signup", {
-        onError: (error) => {
-            errors.value = error;
+    form.post("/reset-password", {
+        onError: (errors) => {
+          if (errors.password_previous) {
+            alert(errors.password_previous); // Handle incorrect password message
+          }
         },
     });
 };
 </script>
 
 <template>
-    <div class="flex items-center justify-center w-screen h-screen">
+
+    <div class="flex relative items-center justify-center w-screen h-screen gap-10">
+        <Button class="absolute top-10 left-12">
+            <Link href="/"> <i class="bi bi-arrow-left me-2"></i>Home</Link>
+        </Button>
         <Card class="mx-auto max-w-sm">
             <CardHeader>
-                <CardTitle class="text-xl"> Sign Up </CardTitle>
+                <CardTitle class="text-xl">Change Password </CardTitle>
                 <CardDescription>
-                    Enter your information to create an account
+                    Enter your previous password to change a new one
                 </CardDescription>
             </CardHeader>
             <form @submit.prevent="submit">
                 <CardContent>
                     <div class="grid gap-4">
                         <div class="grid gap-2">
-                            <Label for="username">Username</Label>
+                            <Label for="password">Previous Password</Label>
                             <Input
-                                id="username"
-                                placeholder="Max"
-                                required
-                                autocomplete="false"
-                                autofocus
-                                v-model="form.name"
-                                :class="{ 'is-invalid': errors.name }"
+                                id="password_previous"
+                                type="password"
+                                v-model="form.password_previous"
+                                :class="{ 'is-invalid': errors.password_previous }"
                             />
-                            <span v-if="errors.name">{{ errors.name }}</span>
-                        </div>
-                        <div class="grid gap-2">
-                            <Label for="email">Email</Label>
-                            <Input
-                                id="email"
-                                type="email"
-                                placeholder="m@example.com"
-                                required
-                                v-model="form.email"
-                                :class="{ 'is-invalid': errors.email }"
-                            />
-                            <span v-if="errors.email">{{ errors.email }}</span>
+                            <span v-if="errors.password">{{
+                                errors.password
+                            }}</span>
                         </div>
                         <div class="grid gap-2">
                             <Label for="password">Password</Label>
@@ -76,7 +68,9 @@ const submit = () => {
                                 v-model="form.password"
                                 :class="{ 'is-invalid': errors.password }"
                             />
-                            <span v-if="errors.password">{{errors.password}}</span>
+                            <span v-if="errors.password">{{
+                                errors.password
+                            }}</span>
                         </div>
                         <div class="grid gap-2">
                             <Label for="password_confirmation"
@@ -95,12 +89,8 @@ const submit = () => {
                             }}</span>
                         </div>
                         <Button type="submit" class="w-full">
-                            Create an account
+                            Change Password
                         </Button>
-                    </div>
-                    <div class="mt-4 text-center text-sm">
-                        Already have an account?
-                        <Link href="/login" class="underline"> Sign in </Link>
                     </div>
                 </CardContent>
             </form>

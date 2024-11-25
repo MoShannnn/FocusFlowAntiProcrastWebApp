@@ -133,13 +133,13 @@ export default {
             return time < 10 ? "0" + time : time.toString();
         },
         start() {
-            this.stop();
             this.isRunning = true;
-            this.timerInstance = setTimeout(() => {
+            this.timerInstance = setInterval(() => {
                 if (this.totalSeconds > 0) {
                     this.totalSeconds --;
                 } else {
                     this.stop();
+                    alert('Time is up!');
                 }
             }, 1000);
         },

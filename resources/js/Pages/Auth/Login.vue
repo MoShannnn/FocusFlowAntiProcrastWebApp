@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -56,12 +56,12 @@ const submit = () => {
                         <div class="grid gap-2">
                             <div class="flex items-center">
                                 <Label for="password">Password</Label>
-                                <a
+                                <!-- <a
                                     href="#"
                                     class="ml-auto inline-block text-sm underline"
                                 >
                                     Forgot your password?
-                                </a>
+                                </a> -->
                             </div>
                             <Input
                                 id="password"
