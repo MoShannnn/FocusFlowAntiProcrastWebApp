@@ -4,10 +4,7 @@
         class="relative z-[20] h-[100vh] flex-shrink-0 isolate transition-all duration-200"
     >
         <!-- Border Wrapper -->
-        <div
-            :class="toggleSidebar ? 'h-[87vh]' : 'h-[100vh]'"
-            class="absolute left-0 bottom-0 w-full border-l border-black dark:border-white"
-        ></div>
+        <div :class="toggleSidebar ? 'h-[87vh]' : 'h-[100vh]'" class="absolute left-0 bottom-0 w-full border-l border-black dark:border-white"></div>
 
         <div class="h-full pt-3">
             
@@ -28,12 +25,14 @@
                 </span>
             </div>
 
-            <SidebarMenuNav
-                v-if="toggleSidebar"
-                :toggle-sidebar="toggleSidebar"
-                :timers="timers" 
-                :save="save"
-            />
+            <!-- Start Expanded Sibebar Menu Navigation-->
+                <SidebarMenuNav
+                    v-if="toggleSidebar"
+                    :toggle-sidebar="toggleSidebar"
+                    :timers="timers" 
+                    :save="save"
+                />
+            <!-- End Expanded Sibebar Menu Navigation-->
 
         </div>
     </nav>

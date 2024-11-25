@@ -12,9 +12,9 @@
 <script setup>
 import ModeToggle from "@/components/ModeToggle.vue";
 import ReportDialog from "@/components/ReportDialog.vue";
-import TimerCustomDialog from "./TimerCustomDialog.vue";
-import ProfileDialog from "./ProfileDialog.vue";
-import ToDoList from "./ToDoList.vue";
+import TimerCustomDialog from "@/components/TimerCustomDialog.vue";
+import ProfileDialog from "@/components/ProfileDialog.vue";
+import ToDoList from "@/components/ToDoList.vue";
 
 // Define props using `defineProps`
 defineProps({

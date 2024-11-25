@@ -108,6 +108,26 @@ export default {
             return this.formatTime(seconds);
         },
     },
+    watch: {
+        timerEnabled(value) {
+            if (value) {
+                setTimeout(() => {
+                    this.timerCount--;
+                }, 1000);
+            }
+        },
+
+        timerCount: {
+            handler(value) {
+                if (value > 0 && this.timerEnabled) {
+                    setTimeout(() => {
+                        this.timerCount--;
+                    }, 1000);
+                }
+            },
+            immediate: true, // This ensures the watcher is triggered upon creation
+        },
+    },
     methods: {
         formatTime(time) {
             return time < 10 ? "0" + time : time.toString();
@@ -115,9 +135,9 @@ export default {
         start() {
             this.stop();
             this.isRunning = true;
-            this.timerInstance = setInterval(() => {
+            this.timerInstance = setTimeout(() => {
                 if (this.totalSeconds > 0) {
-                    this.totalSeconds -= 1;
+                    this.totalSeconds --;
                 } else {
                     this.stop();
                 }
@@ -125,7 +145,10 @@ export default {
         },
         stop() {
             this.isRunning = false;
-            clearInterval(this.timerInstance);
+            if (this.timerInstance) {
+                clearInterval(this.timerInstance); // Clear the interval to stop the timer
+                this.timerInstance = null; // Reset the timer instance
+            }
         },
         reset(minutes) {
             this.stop();
@@ -135,6 +158,10 @@ export default {
             this.currentTimer = index;
             this.reset(this.timers[index].minutes);
         },
+    },
+    beforeDestroy() {
+        // Cleanup: stop the timer when the component is destroyed
+        this.stop();
     },
 };
 </script>
