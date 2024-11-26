@@ -1,7 +1,7 @@
 <template>
     <div
         class="w-10/12 max-w-[850px] h-[50px] relative current-task"
-        style="margin: 72px auto 30px"
+        style="margin: 30px auto 30px"
     >
         <div
             class="w-full h-[50px] top-0 absolute rounded-[20px] shadow border-4 border-[#3b1161] xl:text-2xl lg:text-xl font-normal tracking-widest flex items-center justify-center"

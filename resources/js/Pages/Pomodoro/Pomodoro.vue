@@ -2,7 +2,7 @@
     <div class="mx-auto flex flex-col gap-5 w-full">
         <!--Tabs navigation-->
         <ul
-            class="max-w-[720px] flex list-none flex-row flex-wrap border-b-0 ps-0 my-10 mx-auto timer-mode"
+            class="max-w-[720px] flex list-none flex-row flex-wrap border-b-0 ps-0 my-6 mx-auto timer-mode"
             style="width: 72%"
         >
             <li
@@ -33,8 +33,8 @@
 
         <div
             v-if="timers[currentTimer]"
-            class="countdown-timer max-w-[800px] flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg px-5 shadow-light dark:shadow-dark dark:text-shadow mx-auto"
-            style="width: 78%"
+            class="countdown-timer max-w-[720px] flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg shadow-light dark:shadow-dark dark:text-shadow mx-auto"
+            style="width: 72%"
         >
             <span class="timer-text dark:text-white">
                 {{ displayMinutes }}
@@ -66,7 +66,7 @@
 
             <div
                 v-else
-                class="bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer p-1 pl-3"
+                class="bg-[#A24BF4] dark:bg-white mt-2 rounded-full flex items-center justify-center cursor-pointer p-0.5 pl-2"
                 @click="start"
             >
                 <i
@@ -174,16 +174,31 @@ export default {
 @media (min-width: 1280px) {
     .timer-text {
         font-size: 220px;
-        line-height: 200px;
-        margin: 0 20px 50px;
+        line-height: 180px;
+        margin: 0 20px 40px;
     }
 
     .two-dot {
-        font-size: 160px;
+        font-size: 120px;
     }
 
     .countdown-timer {
         border-width: 20px;
+    }
+}
+@media (max-width: 1280px) {
+    .timer-text {
+        font-size: 200px;
+        line-height: 180px;
+        margin: 0 20px 30px;
+    }
+
+    .two-dot {
+        font-size: 100px;
+    }
+
+    .countdown-timer {
+        border-width: 18px;
     }
 }
 
