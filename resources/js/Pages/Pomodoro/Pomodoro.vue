@@ -1,3 +1,75 @@
+<script>
+export default {
+    props: {
+        timers: {
+            type: Array,
+            required: true,
+        },
+        save: {
+            type: Function,
+            required: true,
+        },
+    },
+    data() {
+        return {
+            isRunning: false,
+            timerInstance: null,
+            totalSeconds: 25 * 60, // Default timer for Pomodoro
+            currentTimer: 0,
+            audioPath: '/audios/normalAlarm.mp3',
+        };
+    },
+    computed: {
+        displayMinutes() {
+            const minutes = Math.floor(this.totalSeconds / 60);
+            return this.formatTime(minutes);
+        },
+        displaySeconds() {
+            const seconds = this.totalSeconds % 60;
+            return this.formatTime(seconds);
+        },
+    },
+    methods: {
+        formatTime(time) {
+            return time < 10 ? "0" + time : time.toString();
+        },
+        start() {
+            this.isRunning = true;
+            this.timerInstance = setInterval(() => {
+                if (this.totalSeconds > 0) {
+                    this.totalSeconds --;
+                } else {
+                    this.stop();
+                    const audio = new Audio(this.audioPath);
+                    audio
+                        .play() 
+                        .catch((error) =>
+                            console.error("Audio playback failed:", error)
+                        );
+                }
+            }, 1);
+        },
+        stop() {
+            this.isRunning = false;
+            if (this.timerInstance) {
+                clearInterval(this.timerInstance); 
+            }
+        },
+        reset(minutes) {
+            this.stop();
+            this.totalSeconds = minutes * 60;
+        },
+        changeCurrentTimer(index) {
+            this.currentTimer = index;
+            this.reset(this.timers[index].minutes);
+        },
+    },
+    beforeDestroy() {
+        this.stop();
+    },
+};
+</script>
+
 <template>
     <div class="mx-auto flex flex-col gap-5 w-full">
         <!--Tabs navigation-->
@@ -76,94 +148,6 @@
         </div>
     </div>
 </template>
-
-<script>
-export default {
-    props: {
-        timers: {
-            type: Array,
-            required: true,
-        },
-        save: {
-            type: Function,
-            required: true,
-        },
-    },
-    data() {
-        return {
-            isRunning: false,
-            timerInstance: null,
-            totalSeconds: 25 * 60, // Default timer for Pomodoro
-            currentTimer: 0,
-        };
-    },
-    computed: {
-        displayMinutes() {
-            const minutes = Math.floor(this.totalSeconds / 60);
-            return this.formatTime(minutes);
-        },
-        displaySeconds() {
-            const seconds = this.totalSeconds % 60;
-            return this.formatTime(seconds);
-        },
-    },
-    watch: {
-        timerEnabled(value) {
-            if (value) {
-                setTimeout(() => {
-                    this.timerCount--;
-                }, 1000);
-            }
-        },
-
-        timerCount: {
-            handler(value) {
-                if (value > 0 && this.timerEnabled) {
-                    setTimeout(() => {
-                        this.timerCount--;
-                    }, 1000);
-                }
-            },
-            immediate: true, // This ensures the watcher is triggered upon creation
-        },
-    },
-    methods: {
-        formatTime(time) {
-            return time < 10 ? "0" + time : time.toString();
-        },
-        start() {
-            this.isRunning = true;
-            this.timerInstance = setInterval(() => {
-                if (this.totalSeconds > 0) {
-                    this.totalSeconds --;
-                } else {
-                    this.stop();
-                    alert('Time is up!');
-                }
-            }, 1000);
-        },
-        stop() {
-            this.isRunning = false;
-            if (this.timerInstance) {
-                clearInterval(this.timerInstance); // Clear the interval to stop the timer
-                this.timerInstance = null; // Reset the timer instance
-            }
-        },
-        reset(minutes) {
-            this.stop();
-            this.totalSeconds = minutes * 60;
-        },
-        changeCurrentTimer(index) {
-            this.currentTimer = index;
-            this.reset(this.timers[index].minutes);
-        },
-    },
-    beforeDestroy() {
-        // Cleanup: stop the timer when the component is destroyed
-        this.stop();
-    },
-};
-</script>
 
 <style>
 .timer-text {
