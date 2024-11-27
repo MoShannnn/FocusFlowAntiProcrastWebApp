@@ -28,7 +28,7 @@ const save = (updatedTimers) => {
                 Focus Flow
             </h1>
 
-            <div class="h-[87vh]" style="padding-top: 40px !important">
+            <div class="h-[87vh] paddingTop" style="padding-top: 8%">
                 <CurrentTask />
 
                 <Pomodoro :timers="timers" :save="save" />
@@ -36,6 +36,13 @@ const save = (updatedTimers) => {
         </div>
 
         <SidebarMenu :timers="timers" :save="save" />
-        <!-- w-full absolute left-0 bottom-0 h-[87vh] px-10 -->
     </div>
 </template>
+
+<style>
+@media (max-width: 1280px) and (max-height: 720px) {
+    .paddingTop {
+        padding-top: 5% !important;
+    }
+}
+</style>

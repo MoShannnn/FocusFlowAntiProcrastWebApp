@@ -1,12 +1,88 @@
+<script setup>
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Button } from "./ui/button/index";
+import {
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+
+import { ref, onMounted, computed, watch } from "vue";
+
+const todos = ref([]);
+
+const showInput = ref(false);
+const input_content = ref("");
+
+const toggleInput = () => {
+    showInput.value = !showInput.value; // Toggles visibility
+};
+
+const todos_asc = computed(() =>
+    todos.value.sort((a, b) => {
+        return a.createdAt - b.createdAt;
+    })
+);
+
+const handleCheckboxChange = (index, checked) => {
+  todos.value[index].done = checked;
+};
+
+watch(
+    todos,
+    (newVal) => {
+        localStorage.setItem("todos", JSON.stringify(newVal));
+    },
+    {
+        deep: true,
+    }
+);
+
+const addTodo = () => {
+    if (input_content.value.trim() === "") {
+        return;
+    }
+
+    todos.value.push({
+        content: input_content.value,
+        done: false,
+        editable: false,
+        createdAt: new Date().getTime(),
+    });
+
+    input_content.value = "";
+};
+
+const cancelTask = () => {
+    input_content.value = "";
+    showInput.value = false;
+};
+
+const removeTodo = (todo) => {
+    todos.value = todos.value.filter((t) => t !== todo);
+};
+
+onMounted(() => {
+    todos.value = JSON.parse(localStorage.getItem("todos")) || [];
+});
+</script>
+
 <template>
     <div class="w-full absolute left-0 bottom-0 h-[87vh] px-10">
         <h1 class="font-asap xl:text-3xl lg:text-2xl text-lg font-bold mb-5">Tasks</h1>
 
         <div
-            v-for="todo in todos_asc"
+            v-for="(todo, index) in todos_asc"
             class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-4"
         >
-            <Checkbox class="flex-none" />
+        <Checkbox
+    :checked="todo.done"
+    @update:checked="(checked) => handleCheckboxChange(index, checked)"
+  />
             <Input
                 type="text"
                 class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
@@ -58,67 +134,6 @@
         </Button>
     </div>
 </template>
-
-<script setup>
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Button } from "./ui/button/index";
-
-import { ref, onMounted, computed, watch } from "vue";
-
-const todos = ref([]);
-
-const showInput = ref(false);
-const input_content = ref("");
-
-const toggleInput = () => {
-    showInput.value = !showInput.value; // Toggles visibility
-};
-
-const todos_asc = computed(() =>
-    todos.value.sort((a, b) => {
-        return a.createdAt - b.createdAt;
-    })
-);
-
-watch(
-    todos,
-    (newVal) => {
-        localStorage.setItem("todos", JSON.stringify(newVal));
-    },
-    {
-        deep: true,
-    }
-);
-
-const addTodo = () => {
-    if (input_content.value.trim() === "") {
-        return;
-    }
-
-    todos.value.push({
-        content: input_content.value,
-        done: false,
-        editable: false,
-        createdAt: new Date().getTime(),
-    });
-
-    input_content.value = "";
-};
-
-const cancelTask = () => {
-    input_content.value = "";
-    showInput.value = false;
-};
-
-const removeTodo = (todo) => {
-    todos.value = todos.value.filter((t) => t !== todo);
-};
-
-onMounted(() => {
-    todos.value = JSON.parse(localStorage.getItem("todos")) || [];
-});
-</script>
 
 <style>
 .border-spacing {
