@@ -4,20 +4,20 @@ import SidebarMenu from "./SidebarMenu/SidebarMenu.vue";
 import Pomodoro from "./Pomodoro/Pomodoro.vue";
 import CurrentTask from "../components/CurrentTask.vue";
 
-// Define the timers array as a reactive reference
 const timers = ref([
     { name: "Pomodoro", minutes: 25 },
     { name: "Short Break", minutes: 5 },
     { name: "Long Break", minutes: 10 },
 ]);
 
-// The save function will update the timers array
+// The save function updates the timers array
 const save = (updatedTimers) => {
-    // Update the timers array with the new values
-    timers.value = timers.value.map((timer, i) => ({
+    timers.value = updatedTimers.map(timer => ({
         ...timer,
-        minutes: parseInt(updatedTimers[i]),
+        minutes: parseInt(timer.minutes, 10), // Ensure minutes are numbers
     }));
+    alert('Success Updated!');
+    this.timers = [...updatedTimers];
 };
 </script>
 

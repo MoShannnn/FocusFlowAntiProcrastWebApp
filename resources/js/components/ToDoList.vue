@@ -3,12 +3,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button/index";
 import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from '@/components/ui/form'
 
 import { ref, onMounted, computed, watch } from "vue";
@@ -29,7 +29,7 @@ const todos_asc = computed(() =>
 );
 
 const handleCheckboxChange = (index, checked) => {
-  todos.value[index].done = checked;
+    todos.value[index].done = checked;
 };
 
 watch(
@@ -75,60 +75,33 @@ onMounted(() => {
     <div class="w-full absolute left-0 bottom-0 h-[87vh] px-10">
         <h1 class="font-asap xl:text-3xl lg:text-2xl text-lg font-bold mb-5">Tasks</h1>
 
-        <div
-            v-for="(todo, index) in todos_asc"
-            class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-4"
-        >
-        <Checkbox
-    :checked="todo.done"
-    @update:checked="(checked) => handleCheckboxChange(index, checked)"
-  />
-            <Input
-                type="text"
-                class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
-                v-model="todo.content"
-            />
+        <div v-for="(todo, index) in todos_asc"
+            class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-4">
+            <Checkbox :checked="todo.done" @update:checked="(checked) => handleCheckboxChange(index, checked)" />
+            <Input type="text" class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
+                v-model="todo.content" />
             <div class="actions">
                 <button class="delete xl:text-base text-xs" @click="removeTodo(todo)">Delete</button>
             </div>
         </div>
 
         <!-- Add New Task Form -->
-        <form
-            v-if="showInput"
-            class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl"
-            @submit.prevent="addTodo"
-        >
+        <form v-if="showInput" class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl" @submit.prevent="addTodo">
             <div class="grid gap-4">
 
-                <Input
-                    class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
-                    v-model="input_content"
-                    autofocus
-                />
+                <Input class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
+                    v-model="input_content" autofocus />
 
                 <div class="flex flex-row justify-end gap-4">
-                    <Button
-                        type="submit"
-                        @click="saveTask"
-                        >Save</Button
-                    >
-                    <Button
-                        type="cancel"
-                        variant="secondary"
-                        @click="cancelTask"
-                        >Cancel</Button
-                    >
+                    <Button type="submit" @click="saveTask">Save</Button>
+                    <Button type="cancel" variant="secondary" @click="cancelTask">Cancel</Button>
                 </div>
 
             </div>
         </form>
 
-        <Button
-            v-else
-            @click="toggleInput"
-            class="w-full flex items-center h-12 xl:text-xl lg:text-lg font-asap text-black border-2 border-dashed border-spacing border-[#B3AEAE]/50 bg-[#FFFBFF] hover:bg-neutral-50 dark:text-white dark:bg-[#2f2929]/50 dark:hover:bg-[#2f2929]/40 dark:border-[#D3D3D3]/50"
-        >
+        <Button v-else @click="toggleInput"
+            class="w-full flex items-center h-12 xl:text-xl lg:text-lg font-asap text-black border-2 border-dashed border-spacing border-[#B3AEAE]/50 bg-[#FFFBFF] hover:bg-neutral-50 dark:text-white dark:bg-[#2f2929]/50 dark:hover:bg-[#2f2929]/40 dark:border-[#D3D3D3]/50">
             Add new task
             <span class="material-symbols-outlined"> add </span>
         </Button>

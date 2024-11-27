@@ -38,50 +38,44 @@
     </nav>
 </template>
 
-<script>
-import { ref } from "vue";
+<script setup>
+import { ref, onMounted, watch } from "vue";
 import SidebarMenuNav from "./SidebarMenuNav.vue";
 
+// Props
+defineProps({
+  timers: {
+    type: Array,
+    required: true,
+  },
+  save: {
+    type: Function,
+    required: true,
+  },
+});
+
+// Reactive variables
 const toggleSidebar = ref(
-    localStorage.getItem("toggleSidebar") === "true" || false
+  localStorage.getItem("toggleSidebar") === "true" || false
 );
 const currentPath = ref(window.location.pathname);
 
+// Methods
 const handleToggleSidebar = () => {
-    toggleSidebar.value = !toggleSidebar.value;
+  toggleSidebar.value = !toggleSidebar.value;
 
-    if (toggleSidebar.value) {
-        localStorage.setItem("toggleSidebar", "true");
-    } else {
-        localStorage.removeItem("toggleSidebar");
-    }
+  if (toggleSidebar.value) {
+    localStorage.setItem("toggleSidebar", "true");
+  } else {
+    localStorage.removeItem("toggleSidebar");
+  }
 };
 
-window.addEventListener("popstate", () => {
+// Watch for browser navigation changes
+onMounted(() => {
+  window.addEventListener("popstate", () => {
     currentPath.value = window.location.pathname;
+  });
 });
-
-export default {
-    props: {
-        timers: {
-            type: Array,
-            required: true,
-        },
-        save: {
-            type: Function,
-            required: true,
-        },
-    },
-    components: {
-        SidebarMenuNav,
-    },
-    setup() {
-        return {
-            toggleSidebar,
-            currentPath,
-            handleToggleSidebar,
-        };
-    },
-};
 </script>
 

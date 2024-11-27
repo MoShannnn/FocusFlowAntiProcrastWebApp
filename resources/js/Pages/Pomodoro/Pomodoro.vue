@@ -39,7 +39,7 @@ export default {
                 if (this.totalSeconds > 0) {
                     this.totalSeconds --;
                 } else {
-                    this.stop();
+                    this.changeCurrentTimer(this.currentTimer); 
                     const audio = new Audio(this.audioPath);
                     audio
                         .play() 
@@ -105,7 +105,7 @@ export default {
 
         <div
             v-if="timers[currentTimer]"
-            class="countdown-timer max-w-[720px] flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg shadow-light dark:shadow-dark dark:text-shadow mx-auto"
+            class="countdown-timer max-w-[720px] flex items-center justify-center border-black dark:border-[#A24BF4] rounded-lg shadow-light dark:shadow-dark dark:text-shadow mx-auto py-2"
             style="width: 72%"
         >
             <span class="timer-text dark:text-white">
@@ -157,7 +157,7 @@ export default {
 
 @media (min-width: 1280px) {
     .timer-text {
-        font-size: 220px;
+        font-size: 200px;
         line-height: 180px;
         margin: 0 20px 40px;
     }
@@ -172,8 +172,8 @@ export default {
 }
 @media (max-width: 1280px) {
     .timer-text {
-        font-size: 200px;
-        line-height: 180px;
+        font-size: 180px;
+        line-height: 160px;
         margin: 0 20px 30px;
     }
 
@@ -188,9 +188,9 @@ export default {
 
 @media (max-width: 1024px) {
     .timer-text {
-        font-size: 145px;
-        line-height: 140px;
-        margin: 0 20px 30px;
+        font-size: 130px;
+        line-height: 100px;
+        margin: 0 20px 20px;
     }
     .two-dot {
         font-size: 100px;
@@ -198,6 +198,7 @@ export default {
     }
     .countdown-timer {
         border-width: 16px;
+        padding: 0 !important;
     }
     .timer-mode {
         margin: 30px auto !important;
@@ -223,8 +224,12 @@ export default {
         margin: 0 20px 20px;
     }
     .two-dot {
-        font-size: 100px;
+        font-size: 66px;
         margin-bottom: 10px;
+    }
+    .countdown-timer {
+        border-width: 12px;
+        padding: 0 !important;
     }
 }
 </style>
