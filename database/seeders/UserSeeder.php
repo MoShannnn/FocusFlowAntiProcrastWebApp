@@ -19,7 +19,6 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('123123123'), // Change 'yourpassword' to your desired password
             'role' => 'admin',
-            'profile_photo_path' => null,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
