@@ -68,7 +68,6 @@ function start() {
                         errors.value = error;
                     },
                 });
-                console.log('successs');
             }
         }
     }, 1);

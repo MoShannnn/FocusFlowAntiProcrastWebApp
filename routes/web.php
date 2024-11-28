@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TimerSessionLogController;
 use App\Http\Controllers\UserController;
@@ -30,6 +31,8 @@ Route::get('/reset-password', [UserController::class, 'resetPassword'])->name('r
 Route::post('/reset-password', [UserController::class, 'updatePassword'])->name('updatePassword');
 
 // Task 
+Route::resource('categories', CategoryController::class);
+
 Route::resource('tasks', TaskController::class);
 
 Route::resource('timers', TimerSessionLogController::class);

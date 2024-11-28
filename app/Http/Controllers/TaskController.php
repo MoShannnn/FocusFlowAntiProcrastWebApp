@@ -6,7 +6,6 @@ use App\Models\Task;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
 class TaskController extends Controller
 {
     public function index()
