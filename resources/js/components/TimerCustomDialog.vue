@@ -31,7 +31,7 @@ const updatedTimers = ref([...props.timers]);
 </script>
 
 <template>
-    <Dialog onOpenChange={setOpen}>
+    <Dialog>
         <DialogTrigger asChild>
             <Button variant="ghost" class="text-md font-asap">
                 <span class="material-symbols-outlined"> alarm </span>Timer
