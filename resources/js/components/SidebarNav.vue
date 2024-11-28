@@ -18,10 +18,6 @@ const sidebarNavItems: Item[] = [
     title: 'Change Password',
     href: '/reset-password',
   },
-  {
-    title: 'Notifications',
-    href: '/examples/forms/notifications',
-  },
 ]
 </script>
 
