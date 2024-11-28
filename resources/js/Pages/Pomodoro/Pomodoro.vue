@@ -1,73 +1,96 @@
-<script>
-export default {
-    props: {
-        timers: {
-            type: Array,
-            required: true,
-        },
-        save: {
-            type: Function,
-            required: true,
-        },
+<script setup>
+import { ref, computed } from "vue";
+import { useForm, usePage } from "@inertiajs/vue3";
+
+const { props } = usePage();
+const auth = props.auth;
+
+// Props
+const prop = defineProps({
+    timers: {
+        type: Array,
+        required: true,
     },
-    data() {
-        return {
-            isRunning: false,
-            timerInstance: null,
-            totalSeconds: 25 * 60, // Default timer for Pomodoro
-            currentTimer: 0,
-            audioPath: '/audios/normalAlarm.mp3',
-        };
+    save: {
+        type: Function,
+        required: true,
     },
-    computed: {
-        displayMinutes() {
-            const minutes = Math.floor(this.totalSeconds / 60);
-            return this.formatTime(minutes);
-        },
-        displaySeconds() {
-            const seconds = this.totalSeconds % 60;
-            return this.formatTime(seconds);
-        },
-    },
-    methods: {
-        formatTime(time) {
-            return time < 10 ? "0" + time : time.toString();
-        },
-        start() {
-            this.isRunning = true;
-            this.timerInstance = setInterval(() => {
-                if (this.totalSeconds > 0) {
-                    this.totalSeconds --;
-                } else {
-                    this.changeCurrentTimer(this.currentTimer); 
-                    const audio = new Audio(this.audioPath);
-                    audio
-                        .play() 
-                        .catch((error) =>
-                            console.error("Audio playback failed:", error)
-                        );
-                }
-            }, 1);
-        },
-        stop() {
-            this.isRunning = false;
-            if (this.timerInstance) {
-                clearInterval(this.timerInstance); 
+});
+
+// State Variables
+const isRunning = ref(false);
+const timerInstance = ref(null);
+const totalSeconds = ref(25 * 60); // Default timer for Pomodoro
+const currentTimer = ref(0);
+const audioPath = "/audios/normalAlarm.mp3";
+
+// Computed Properties
+const displayMinutes = computed(() => {
+    const minutes = Math.floor(totalSeconds.value / 60);
+    return formatTime(minutes);
+});
+
+const displaySeconds = computed(() => {
+    const seconds = totalSeconds.value % 60;
+    return formatTime(seconds);
+});
+
+// Methods
+function formatTime(time) {
+    return time < 10 ? "0" + time : time.toString();
+}
+
+function start() {
+    isRunning.value = true;
+    //Form
+    const form = useForm({
+        duration: totalSeconds.value,
+        timer_session_type_id: currentTimer.value + 1,
+    });
+
+    const errors = ref({});
+
+    timerInstance.value = setInterval(() => {
+        if (totalSeconds.value > 0) {
+            totalSeconds.value--;
+        } else {
+            changeCurrentTimer(currentTimer.value);
+            const audio = new Audio(audioPath);
+            audio
+                .play()
+                .catch((error) =>
+                    console.error("Audio playback failed:", error)
+                );
+
+            if (auth.user) {
+                form.post("/timers", {
+                    onError: (error) => {
+                        errors.value = error;
+                    },
+                });
+                console.log('successs');
             }
-        },
-        reset(minutes) {
-            this.stop();
-            this.totalSeconds = minutes * 60;
-        },
-        changeCurrentTimer(index) {
-            this.currentTimer = index;
-            this.reset(this.timers[index].minutes);
-        },
-    },
-    beforeDestroy() {
-        this.stop();
-    },
-};
+        }
+    }, 1);
+}
+
+function stop() {
+    isRunning.value = false;
+    if (timerInstance.value) {
+        clearInterval(timerInstance.value);
+        timerInstance.value = null;
+    }
+}
+
+function reset(minutes) {
+    stop();
+    totalSeconds.value = minutes * 60;
+}
+
+function changeCurrentTimer(index) {
+    currentTimer.value = index;
+    reset(prop.timers[index].minutes);
+}
 </script>
 
 <template>
@@ -123,10 +146,7 @@ export default {
                 class="flex items-center gap-4 cursor-pointer mt-3 timer-running"
                 style="margin-left: 50px"
             >
-                <i
-                    class="bi bi-pause-btn text-7xl stop-icon"
-                    @click="stop"
-                ></i>
+                <i class="bi bi-pause-btn text-7xl stop-icon" @click="stop"></i>
 
                 <span
                     class="material-symbols-outlined text-4xl cursor-pointer reset-icon"

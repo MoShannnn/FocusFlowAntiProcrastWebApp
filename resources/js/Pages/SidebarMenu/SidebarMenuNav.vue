@@ -14,7 +14,7 @@ import ModeToggle from "@/components/ModeToggle.vue";
 import ReportDialog from "@/components/ReportDialog.vue";
 import TimerCustomDialog from "@/components/TimerCustomDialog.vue";
 import AccountManagement from "@/components/AccountManagement.vue";
-import ToDoList from "@/components/ToDoList.vue";
+import ToDoList from "@/Pages/SidebarMenu/ToDoList.vue";
 
 // Define props using `defineProps`
 defineProps({
