@@ -16,18 +16,18 @@ class StatsAdminOverview extends BaseWidget
     {
         return [
             Stat::make('Total Users', User::query()->count())
-            ->description('Registered Users')
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->chart([7, 2, 10, 3, 15, 4, 17])
-            ->color('success'),
-        Stat::make('Total Tasks', Task::query()->count())
-            ->description('Numer of Tasks')
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->color('danger'),
-        Stat::make('Total Categories', Category::query()->count())
-            ->description('Numer of Categories')
-            ->descriptionIcon('heroicon-m-arrow-trending-up')
-            ->color('success'),
+                ->description('Registered Users')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->chart([7, 2, 10, 3, 15, 4, 17])
+                ->color('success'),
+            Stat::make('Total Tasks', Task::query()->count())
+                ->description('Numer of Tasks')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('danger'),
+            Stat::make('Total Categories', Category::query()->count())
+                ->description('Numer of Categories')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success'),
         ];
     }
 }
