@@ -105,6 +105,7 @@ const updateTask = (todo) => {
 
 const addCategory = () => {
     if (category_content.value.trim() === "") {
+        alert('Please fill out the category name')
         return;
     }
 
@@ -130,6 +131,7 @@ const addCategory = () => {
 
 const addTodo = () => {
     if (task_content.value.trim() === "") {
+        alert('Please fill out the task name');
         return;
     }
 
@@ -207,7 +209,7 @@ onMounted(() => {
         <!-- For Registered User -->
         <div v-if="auth.user" class="mb-2">
             <!-- Start Category Management -->
-            <div class="border-b border-b-gray-500/60 mb-8">
+            <div class="border-b border-b-gray-500/60 mb-4">
                 <form
                     v-if="showCategoryInput"
                     class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl my-5"

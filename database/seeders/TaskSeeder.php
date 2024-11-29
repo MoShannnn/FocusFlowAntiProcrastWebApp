@@ -14,12 +14,12 @@ class TaskSeeder extends Seeder
     public function run(): void
     {
         DB::table('tasks')->insert([
-            ['name' => 'TCA Assignment', 'status' => 0, 'user_id' => 1, 'category_id' => 1],
-            ['name' => 'Draw ERD', 'status' => 0, 'user_id' => 1, 'category_id' => 2],
-            ['name' => 'Normalization', 'status' => 0, 'user_id' => 1, 'category_id' => 2],
-            ['name' => 'Writing Report', 'status' => 0, 'user_id' => 1, 'category_id' => 3],
-            ['name' => 'Coding', 'status' => 0, 'user_id' => 1, 'category_id' => 3],
-            ['name' => 'Presentation', 'status' => 0, 'user_id' => 1, 'category_id' => 3],
+            ['name' => 'TCA Assignment', 'status' => 0, 'user_id' => 1, 'category_id' => 1, 'created_at' => '2024-12-17 05:07:43'],
+            ['name' => 'Draw ERD', 'status' => 0, 'user_id' => 1, 'category_id' => 2, 'created_at' => '2024-10-15 01:07:43'],
+            ['name' => 'Normalization', 'status' => 0, 'user_id' => 1, 'category_id' => 2, 'created_at' => '2024-3-17 01:07:43'],
+            ['name' => 'Writing Report', 'status' => 0, 'user_id' => 1, 'category_id' => 3, 'created_at' => now()],
+            ['name' => 'Coding', 'status' => 0, 'user_id' => 1, 'category_id' => 3, 'created_at' => now()],
+            ['name' => 'Presentation', 'status' => 0, 'user_id' => 1, 'category_id' => 3, 'created_at' => now()],
         ]);
     }
 }

@@ -1,6 +1,6 @@
 <template>
     <nav
-        :class="toggleSidebar ? 'xl:w-4/12' : 'w-[4vh]'"
+        :class="toggleSidebar ? 'md:w-4/12 w-screen' : 'w-[4vh]'"
         class="relative z-[20] h-[100vh] flex-shrink-0 isolate transition-all duration-200"
     >
         <!-- Border Wrapper -->
