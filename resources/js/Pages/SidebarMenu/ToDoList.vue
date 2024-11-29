@@ -2,6 +2,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Button } from "../../components/ui/button/index";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 import { ref, onMounted, computed, watch } from "vue";
 
@@ -10,19 +11,8 @@ import { useForm, usePage } from "@inertiajs/vue3";
 const { props } = usePage();
 const auth = props.auth;
 
-// defineProps({
-//     tasks: Array,
-// });
-defineProps({
-    tasks: {
-        type: Array,
-        default: () => [],
-    },
-    posts: {
-        type: Array,
-        default: () => [],
-    },
-});
+const categories = ref([]);
+const tasks = ref([]);
 
 const todos = ref([]);
 const errors = ref({});
@@ -61,6 +51,22 @@ watch(
     }
 );
 
+// Method to update tasks
+const updateTask = (todo) => {
+    const form = useForm({
+        name: todo.name,
+        status: 0,
+    });
+    form.put(`/tasks/${todo.id}`, {
+        onSuccess: (response) => {
+            tasks.value = response.props.tasks; 
+        },
+        onError: (error) => {
+            errors.value = error;
+        },
+    });
+};
+
 const addCategory = () => {
     if (category_content.value.trim() === "") {
         return;
@@ -73,6 +79,9 @@ const addCategory = () => {
         });
 
         form.post("/categories", {
+            onSuccess: (response) => {
+                categories.value = response.props.categories; // Update with fresh data
+            },
             onError: (error) => {
                 errors.value = error;
             },
@@ -103,6 +112,9 @@ const addTodo = () => {
         });
 
         form.post("/tasks", {
+            onSuccess: (response) => {
+                tasks.value = response.props.tasks; // Update with fresh data
+            },
             onError: (error) => {
                 errors.value = error;
             },
@@ -126,7 +138,10 @@ const removeTodo = (todo) => {
     if (auth.user) {
         console.log(todo);
         const form = useForm({});
-        form.delete(`tasks/${todo.index}`, {
+        form.delete(`tasks/${todo}`, {
+            onSuccess: (response) => {
+                tasks.value = response.props.tasks;
+            },
             onError: (error) => {
                 errors.value = error;
             },
@@ -138,135 +153,147 @@ const removeTodo = (todo) => {
 
 onMounted(() => {
     todos.value = JSON.parse(localStorage.getItem("todos")) || [];
+    categories.value = props.categories || [];
+    tasks.value = props.tasks || [];
 });
 </script>
 
 <template>
-    <div class="w-full absolute left-0 bottom-0 h-[87vh] px-10">
+    <div class="w-full absolute left-0 bottom-0 h-[90vh] px-10">
         <h1 class="font-asap xl:text-3xl lg:text-2xl text-lg font-bold">
             Tasks
-            <div v-if="posts && posts.length > 0">
-                <!-- Render tasks -->
-            </div>
-            <div v-else>No posts available.</div>
         </h1>
 
-        <!-- Start Category Management -->
+        <!-- For Registered User -->
+        <div v-if="auth.user" class="mb-2">
+            <!-- Start Category Management -->
+            <div class="border-b border-b-gray-500/60 mb-8">
+                <form
+                    v-if="showCategoryInput"
+                    class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl my-5"
+                    @submit.prevent="addCategory"
+                >
+                    <div class="grid gap-4">
+                        <Input
+                            class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
+                            v-model="category_content"
+                            autofocus
+                            maxlength="4"
+                        />
 
-        <div class="border-b border-b-gray-500/60 mb-8">
-            <form
-                v-if="showCategoryInput"
-                class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl my-5"
-                @submit.prevent="addCategory"
-            >
-                <div class="grid gap-4">
-                    <Input
-                        class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
-                        v-model="category_content"
-                        autofocus
-                    />
+                        <div class="flex flex-row justify-end gap-4">
+                            <Button type="submit">Save</Button>
+                            <Button
+                                type="cancel"
+                                variant="secondary"
+                                @click="cancelCategory"
+                                >Cancel</Button
+                            >
+                        </div>
+                    </div>
+                </form>
 
-                    <div class="flex flex-row justify-end gap-4">
-                        <Button type="submit">Save</Button>
-                        <Button
-                            type="cancel"
-                            variant="secondary"
-                            @click="cancelCategory"
-                            >Cancel</Button
+                <div
+                    v-else
+                    class="flex flex-row py-3 justify-between items-center"
+                >
+                    <ScrollArea class="w-10/12 py-4">
+                        <div class="flex flex-row gap-2">
+                            <div
+                                v-for="category in categories"
+                                :key="category.id"
+                                class="w-14 border border-black dark:border-white rounded-sm flex items-center justify-center"
+                            >
+                                <h4 class="font-[Caladea]">
+                                    {{ category.name }}
+                                </h4>
+                            </div>
+                        </div>
+                        <ScrollBar orientation="horizontal" />
+                    </ScrollArea>
+                    <button
+                        @click="toggleCategoryInput"
+                        class="bg-black dark:bg-white rounded-full flex items-center justify-center px-1 h-8 w-8 shadow-xl mr-5"
+                    >
+                        <span
+                            class="material-symbols-outlined text-white dark:text-black text-xl"
                         >
+                            add
+                        </span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Start Task Management -->
+            <ScrollArea
+                :class="{ 'h-[58vh]': tasks.length > 8 }"
+                class="rounded-md"
+            >
+                <div
+                    v-for="(todo, index) in tasks"
+                    :key="todo.id"
+                    class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-2"
+                >
+                    <Checkbox
+                        :checked="todo.done"
+                        @update:checked="
+                            (checked) => handleCheckboxChange(index, checked)
+                        "
+                    />
+                    <Input
+                        type="text"
+                        class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
+                        v-model="todo.name"
+                        maxlength="20"
+                        @input="updateTask(todo)"
+                    />
+                    <div class="actions">
+                        <button
+                            class="delete xl:text-base text-xs"
+                            @click="removeTodo(todo.id)"
+                        >
+                            Delete
+                        </button>
                     </div>
                 </div>
-            </form>
-
-            <div v-else class="flex flex-row py-3 justify-between">
-                <div class="flex flex-row gap-2">
-                    <div
-                        class="w-14 border border-black dark:border-white rounded-sm flex items-center justify-center"
-                    >
-                        <h4 class="font-[Caladea]">CCSM</h4>
-                    </div>
-                    <div
-                        class="w-14 border border-black dark:border-white rounded-sm flex items-center justify-center"
-                    >
-                        <h4 class="font-[Caladea]">DBMS</h4>
-                    </div>
-                    <div
-                        class="w-14 border border-black dark:border-white rounded-sm flex items-center justify-center"
-                    >
-                        <h4 class="font-[Caladea]">DW</h4>
-                    </div>
-                </div>
-
-                <button
-                    @click="toggleCategoryInput"
-                    class="bg-black dark:bg-white rounded-full flex items-center justify-center px-1 shadow-xl mr-5"
-                >
-                    <span
-                        class="material-symbols-outlined text-white dark:text-black text-xl"
-                    >
-                        add
-                    </span>
-                </button>
-            </div>
+            </ScrollArea>
         </div>
 
-        <!-- End Category Management -->
-
-        <!-- Start Task Management -->
-        <div
-            v-if="auth.user"
-            v-for="(todo, index) in tasks"
-            class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-4"
-        >
-            <Checkbox
-                :checked="todo.done"
-                @update:checked="
-                    (checked) => handleCheckboxChange(index, checked)
-                "
-            />
-            <Input
-                type="text"
-                class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
-                v-model="todo.content"
-            />
-            <div class="actions">
-                <button
-                    class="delete xl:text-base text-xs"
-                    @click="removeTodo(todo)"
-                >
-                    Delete
-                </button>
-            </div>
-        </div>
-
-        <div
+        <!-- For Normal User -->
+        <ScrollArea
             v-else
-            v-for="(todo, index) in todos_asc"
-            class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-4"
+            :class="{ 'h-[58vh]': todos.length > 8 }"
+            class="rounded-md mb-2"
         >
-            <Checkbox
-                :checked="todo.done"
-                @update:checked="
-                    (checked) => handleCheckboxChange(index, checked)
-                "
-            />
-            <Input
-                type="text"
-                class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
-                v-model="todo.content"
-            />
-            <div class="actions">
-                <button
-                    class="delete xl:text-base text-xs"
-                    @click="removeTodo(todo)"
+            <div class="mt-5">
+                <div
+                    v-for="(todo, index) in todos_asc"
+                    class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-2"
                 >
-                    Delete
-                </button>
+                    <Checkbox
+                        :checked="todo.done"
+                        @update:checked="
+                            (checked) => handleCheckboxChange(index, checked)
+                        "
+                    />
+                    <Input
+                        type="text"
+                        class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
+                        v-model="todo.content"
+                    />
+                    <div class="actions">
+                        <button
+                            class="delete xl:text-base text-xs"
+                            @click="removeTodo(todo)"
+                        >
+                            Delete
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- End Task Management -->
+        </ScrollArea>
 
-        <!-- Add New Task Form -->
+        <!-- Add New Box and form for both Register and Unregister-->
         <form
             v-if="showTaskInput"
             class="p-2 bg-neutral-100 dark:bg-neutral-900 rounded-xl"
@@ -277,6 +304,7 @@ onMounted(() => {
                     class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
                     v-model="task_content"
                     autofocus
+                    maxlength="20"
                 />
 
                 <div class="flex flex-row justify-end gap-4">

@@ -28,7 +28,7 @@ const save = (updatedTimers) => {
                 Focus Flow
             </h1>
 
-            <div class="h-[87vh] paddingTop" style="padding-top: 8%">
+            <div class="h-[90vh] paddingTop" style="padding-top: 8%">
                 <CurrentTask />
 
                 <Pomodoro :timers="timers" :save="save" />

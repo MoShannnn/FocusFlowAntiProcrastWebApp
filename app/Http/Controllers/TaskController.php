@@ -6,6 +6,7 @@ use App\Models\Task;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
 class TaskController extends Controller
 {
     public function index()
@@ -17,7 +18,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:20',
             'status' => 'required|integer',
         ]);
 
@@ -29,8 +30,19 @@ class TaskController extends Controller
             'name' => $request->name,
             'status' => $request->status,
             'user_id' => auth()->user()->id,
-            'category_id' => 1,
+            'category_id' => 5,
         ]);
+
+        return redirect()->back();
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'name' => 'required|string|max:20', // Add validation as needed
+        ]);
+
+        $task->update($request->all());
 
         return redirect()->back();
     }

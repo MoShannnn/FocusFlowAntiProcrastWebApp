@@ -1,12 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\TaskController;
-use App\Http\Controllers\TimerSessionLogController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TimerSessionLogController;
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
@@ -36,4 +37,6 @@ Route::resource('categories', CategoryController::class);
 Route::resource('tasks', TaskController::class);
 
 Route::resource('timers', TimerSessionLogController::class);
+
+Route::resource('posts', PostController::class);
 

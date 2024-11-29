@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
-    public function index()
-    {
-        $posts = Category::all();
-        return Inertia::render('SidebarMenu/ToDoList', ['posts' => $posts]);
-    }
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
