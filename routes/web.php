@@ -37,6 +37,3 @@ Route::resource('categories', CategoryController::class);
 Route::resource('tasks', TaskController::class);
 
 Route::resource('timers', TimerSessionLogController::class);
-
-Route::resource('posts', PostController::class);
-
