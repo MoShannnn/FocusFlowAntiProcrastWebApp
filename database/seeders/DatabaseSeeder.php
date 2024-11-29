@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             TimerSessionTypesSeeder::class,
+            CategorySeeder::class,
+            TaskSeeder::class,
         ]);
     }
 }

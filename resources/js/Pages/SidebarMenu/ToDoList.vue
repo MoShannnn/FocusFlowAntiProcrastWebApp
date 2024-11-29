@@ -22,6 +22,22 @@ const showTaskInput = ref(false);
 
 const category_content = ref("");
 const task_content = ref("");
+const task_category = ref("");
+
+const activeCategoryId = ref(null);
+
+const filteredTasks = computed(() => {
+    if (!activeCategoryId.value) {
+        return tasks.value; // Show all tasks if no category is selected
+    }
+    return tasks.value.filter(
+        (task) => task.category_id === activeCategoryId.value
+    );
+});
+
+function selectCategory(categoryId) {
+    activeCategoryId.value = categoryId;
+}
 
 const toggleCategoryInput = () => {
     showCategoryInput.value = !showCategoryInput.value; // Toggles visibility
@@ -39,6 +55,26 @@ const todos_asc = computed(() =>
 
 const handleCheckboxChange = (index, checked) => {
     todos.value[index].done = checked;
+};
+
+const handleTaskCheckboxChange = (index, checked) => {
+    const todo = tasks.value[index]; // Access the specific task being updated
+
+    // Prepare form with updated status based on checkbox state
+    const form = useForm({
+        name: todo.name,
+        category_id: todo.category_id, // Ensure category_id is preserved
+        status: checked ? 1 : 0, // Set status to 1 if checked, 0 otherwise
+    });
+
+    form.put(`/tasks/${todo.id}`, {
+        onSuccess: (response) => {
+            tasks.value = response.props.tasks; // Refresh the tasks list
+        },
+        onError: (error) => {
+            errors.value = error; // Handle errors
+        },
+    });
 };
 
 watch(
@@ -59,7 +95,7 @@ const updateTask = (todo) => {
     });
     form.put(`/tasks/${todo.id}`, {
         onSuccess: (response) => {
-            tasks.value = response.props.tasks; 
+            tasks.value = response.props.tasks;
         },
         onError: (error) => {
             errors.value = error;
@@ -97,17 +133,12 @@ const addTodo = () => {
         return;
     }
 
-    todos.value.push({
-        content: task_content.value,
-        done: false,
-        editable: false,
-        createdAt: new Date().getTime(),
-    });
-
     if (auth.user) {
+        console.log(task_category.value);
         //Form
         const form = useForm({
             name: task_content.value,
+            category_id: task_category.value,
             status: 0,
         });
 
@@ -119,9 +150,17 @@ const addTodo = () => {
                 errors.value = error;
             },
         });
+    } else {
+        todos.value.push({
+            content: task_content.value,
+            done: false,
+            editable: false,
+            createdAt: new Date().getTime(),
+        });
     }
 
     task_content.value = "";
+    task_category.value = "";
 };
 
 const cancelCategory = () => {
@@ -131,6 +170,7 @@ const cancelCategory = () => {
 
 const cancelTask = () => {
     task_content.value = "";
+    task_category.value = "";
     showTaskInput.value = false;
 };
 
@@ -200,9 +240,27 @@ onMounted(() => {
                     <ScrollArea class="w-10/12 py-4">
                         <div class="flex flex-row gap-2">
                             <div
+                                class="w-14 border rounded-sm flex items-center justify-center cursor-pointer"
+                                :class="{
+                                    'border-2 border-[#A24BF4]': !activeCategoryId,
+                                    'border-black dark:border-white':
+                                        activeCategoryId,
+                                }"
+                                @click="selectCategory(null)"
+                            >
+                                <h4 class="font-[Caladea]">All</h4>
+                            </div>
+                            <div
                                 v-for="category in categories"
                                 :key="category.id"
-                                class="w-14 border border-black dark:border-white rounded-sm flex items-center justify-center"
+                                class="w-14 border rounded-sm flex items-center justify-center cursor-pointer"
+                                :class="{
+                                    'border-2 border-[#A24BF4]':
+                                        category.id === activeCategoryId, 
+                                    'border-black dark:border-white':
+                                        category.id !== activeCategoryId,
+                                }"
+                                @click="selectCategory(category.id)"
                             >
                                 <h4 class="font-[Caladea]">
                                     {{ category.name }}
@@ -230,14 +288,14 @@ onMounted(() => {
                 class="rounded-md"
             >
                 <div
-                    v-for="(todo, index) in tasks"
+                    v-for="(todo, index) in filteredTasks"
                     :key="todo.id"
                     class="flex flex-row gap-4 items-center border border-[#D3D3D3] rounded-lg px-4 py-3 mb-2"
                 >
                     <Checkbox
-                        :checked="todo.done"
+                        :checked="todo.status === 1"
                         @update:checked="
-                            (checked) => handleCheckboxChange(index, checked)
+                            (checked) => handleTaskCheckboxChange(index, checked)
                         "
                     />
                     <Input
@@ -262,7 +320,7 @@ onMounted(() => {
         <!-- For Normal User -->
         <ScrollArea
             v-else
-            :class="{ 'h-[58vh]': todos.length > 8 }"
+            :class="{ 'h-[72vh]': todos.length > 8 }"
             class="rounded-md mb-2"
         >
             <div class="mt-5">
@@ -300,6 +358,7 @@ onMounted(() => {
             @submit.prevent="addTodo"
         >
             <div class="grid gap-4">
+                <!-- Task content input -->
                 <Input
                     class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
                     v-model="task_content"
@@ -307,14 +366,42 @@ onMounted(() => {
                     maxlength="20"
                 />
 
-                <div class="flex flex-row justify-end gap-4">
-                    <Button type="submit">Save</Button>
+                <div v-if="auth.user" class="flex justify-between gap-4">
+                    <select
+                        v-model="task_category"
+                        class="rounded-md w-1/2 px-2 dark:text-white dark:bg-black border border-slate-400"
+                    >
+                        <option disabled value="">Select a category</option>
+                        <option
+                            v-for="category in categories"
+                            :value="category.id"
+                        >
+                            {{ category.name }}
+                        </option>
+                    </select>
+
+                    <!-- Action buttons -->
+                    <div class="flex flex-row justify-end gap-4">
+                        <Button
+                            type="button"
+                            variant="secondary"
+                            @click="cancelTask"
+                        >
+                            Cancel
+                        </Button>
+                        <Button type="submit">Save</Button>
+                    </div>
+                </div>
+
+                <div v-else class="flex flex-row justify-end gap-4">
                     <Button
-                        type="cancel"
+                        type="button"
                         variant="secondary"
                         @click="cancelTask"
-                        >Cancel</Button
                     >
+                        Cancel
+                    </Button>
+                    <Button type="submit">Save</Button>
                 </div>
             </div>
         </form>

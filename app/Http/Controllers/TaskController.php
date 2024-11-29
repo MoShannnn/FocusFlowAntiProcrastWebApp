@@ -19,6 +19,7 @@ class TaskController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:20',
+            'category_id' => 'nullable|integer',
             'status' => 'required|integer',
         ]);
 
@@ -30,7 +31,7 @@ class TaskController extends Controller
             'name' => $request->name,
             'status' => $request->status,
             'user_id' => auth()->user()->id,
-            'category_id' => 5,
+            'category_id' => $request->category_id,
         ]);
 
         return redirect()->back();

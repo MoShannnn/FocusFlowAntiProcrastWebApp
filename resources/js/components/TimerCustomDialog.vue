@@ -47,7 +47,7 @@ const updatedTimers = ref([...props.timers]);
             <div class="grid gap-4 py-4">
                 <div class="grid w-full items-center gap-1.5" v-for="(timer, i) in updatedTimers" :key="i">
                     <Label :for="'timer-' + i">{{ timer.name }}</Label>
-                    <Input v-model="updatedTimers[i].minutes" />
+                    <Input v-model="updatedTimers[i].minutes" maxlength="3" />
                 </div>
             </div>
             <DialogFooter>
