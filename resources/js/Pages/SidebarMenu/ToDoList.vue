@@ -196,12 +196,10 @@ const removeTodo = (todo) => {
 // Remove Category
 const showDeleteIcon = (categoryId, event) => {
     rightClickedCategoryId.value = categoryId;
-    // Optional: Position the delete icon near the cursor
-    const menu = event.target.querySelector(".trash-bin");
-    if (menu) {
-        menu.style.top = `${event.clientY}px`;
-        menu.style.left = `${event.clientX}px`;
-    }
+
+    setTimeout(() => {
+        rightClickedCategoryId.value = null;
+    }, 3000);
 };
 
 const deleteCategory = (id) => {
