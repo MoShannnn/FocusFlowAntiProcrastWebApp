@@ -25,6 +25,7 @@ const task_content = ref("");
 const task_category = ref("");
 
 const activeCategoryId = ref(null);
+const rightClickedCategoryId = ref(null);
 
 const filteredTasks = computed(() => {
     if (!activeCategoryId.value) {
@@ -105,7 +106,7 @@ const updateTask = (todo) => {
 
 const addCategory = () => {
     if (category_content.value.trim() === "") {
-        alert('Please fill out the category name')
+        alert("Please fill out the category name");
         return;
     }
 
@@ -131,7 +132,7 @@ const addCategory = () => {
 
 const addTodo = () => {
     if (task_content.value.trim() === "") {
-        alert('Please fill out the task name');
+        alert("Please fill out the task name");
         return;
     }
 
@@ -178,7 +179,6 @@ const cancelTask = () => {
 
 const removeTodo = (todo) => {
     if (auth.user) {
-        console.log(todo);
         const form = useForm({});
         form.delete(`tasks/${todo}`, {
             onSuccess: (response) => {
@@ -191,6 +191,32 @@ const removeTodo = (todo) => {
     }
 
     todos.value = todos.value.filter((t) => t !== todo);
+};
+
+// Remove Category
+const showDeleteIcon = (categoryId, event) => {
+    rightClickedCategoryId.value = categoryId;
+    // Optional: Position the delete icon near the cursor
+    const menu = event.target.querySelector(".trash-bin");
+    if (menu) {
+        menu.style.top = `${event.clientY}px`;
+        menu.style.left = `${event.clientX}px`;
+    }
+};
+
+const deleteCategory = (id) => {
+    if (confirm("Are you sure you want to delete this category?")) {
+        const form = useForm({});
+        form.delete(`categories/${id}`, {
+            onSuccess: (response) => {
+                categories.value = response.props.categories;
+            },
+            onError: (error) => {
+                errors.value = error;
+            },
+        });
+    }
+    rightClickedCategoryId.value = null; 
 };
 
 onMounted(() => {
@@ -244,7 +270,8 @@ onMounted(() => {
                             <div
                                 class="w-14 border rounded-sm flex items-center justify-center cursor-pointer"
                                 :class="{
-                                    'border-2 border-[#A24BF4]': !activeCategoryId,
+                                    'border-2 border-[#A24BF4]':
+                                        !activeCategoryId,
                                     'border-black dark:border-white':
                                         activeCategoryId,
                                 }"
@@ -255,18 +282,34 @@ onMounted(() => {
                             <div
                                 v-for="category in categories"
                                 :key="category.id"
-                                class="w-14 border rounded-sm flex items-center justify-center cursor-pointer"
+                                class="relative w-14 border rounded-sm flex items-center justify-center cursor-pointer"
                                 :class="{
                                     'border-2 border-[#A24BF4]':
-                                        category.id === activeCategoryId, 
+                                        category.id === activeCategoryId,
                                     'border-black dark:border-white':
                                         category.id !== activeCategoryId,
                                 }"
                                 @click="selectCategory(category.id)"
+                                @contextmenu.prevent="
+                                    showDeleteIcon(category.id)
+                                "
                             >
                                 <h4 class="font-[Caladea]">
                                     {{ category.name }}
                                 </h4>
+
+                                <!-- Trash Bin -->
+                                <div
+                                    v-if="
+                                        rightClickedCategoryId === category.id
+                                    "
+                                    class="absolute trash-bin flex items-center justify-center bg-white shadow-lg rounded border-2 border-red-400 px-5 cursor-pointer"
+                                    @click="deleteCategory(category.id)"
+                                >
+                                    <span class="text-red-600"
+                                        ><i class="bi bi-trash"></i
+                                    ></span>
+                                </div>
                             </div>
                         </div>
                         <ScrollBar orientation="horizontal" />
@@ -297,7 +340,8 @@ onMounted(() => {
                     <Checkbox
                         :checked="todo.status === 1"
                         @update:checked="
-                            (checked) => handleTaskCheckboxChange(index, checked)
+                            (checked) =>
+                                handleTaskCheckboxChange(index, checked)
                         "
                     />
                     <Input
@@ -422,5 +466,12 @@ onMounted(() => {
 <style>
 .border-spacing {
     border-spacing: 10px;
+}
+
+.trash-bin {
+    position: absolute;
+    top: 50%; /* Vertically align with the category */
+    transform: translateY(-50%); /* Center it vertically */
+    z-index: 10; /* Ensure it's above other elements */
 }
 </style>
