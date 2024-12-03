@@ -18,7 +18,7 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:20',
+            'name' => 'required|string|max:50',
             'category_id' => 'nullable|integer',
             'status' => 'required|integer',
         ]);
@@ -40,7 +40,7 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         $request->validate([
-            'name' => 'required|string|max:20', // Add validation as needed
+            'name' => 'required|string|max:50', // Add validation as needed
         ]);
 
         $task->update($request->all());

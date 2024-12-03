@@ -346,7 +346,7 @@ onMounted(() => {
                         type="text"
                         class="flex-1 border-none h-6 font-asap xl:text-xl lg:text-lg text-base px-1"
                         v-model="todo.name"
-                        maxlength="20"
+                        maxlength="50"
                         @input="updateTask(todo)"
                     />
                     <div class="actions">
@@ -407,7 +407,7 @@ onMounted(() => {
                     class="flex-1 xl:text-xl lg:text-lg outline-none ring-2 ring-ring ring-offset-2"
                     v-model="task_content"
                     autofocus
-                    maxlength="20"
+                    maxlength="50"
                 />
 
                 <div v-if="auth.user" class="flex justify-between gap-4">
