@@ -36,7 +36,7 @@ DB_PASSWORD=
 - npm install
 - copy .env.example .env
 - php artisan key:generate
-- php artisan migrate:fresh —seed
+- php artisan migrate:fresh -—seed
 ```
 
 
