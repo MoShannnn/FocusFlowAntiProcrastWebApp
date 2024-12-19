@@ -1,6 +1,8 @@
-# FocusFlow - Laravel and Vue.js Project
+![Screenshot 2024-12-06 140425](https://github.com/user-attachments/assets/d3df046a-5f54-4bc8-bbf0-94b916ac358b)# FocusFlow - Laravel and Vue.js Project
 
 This is the setup guide for the **FocusFlowAntiProcrastWebApp**, which combines **Laravel** for the backend and **Vue.js** for the frontend. And use Inertia.js as a routing library.
+
+![Screenshot 2024-12-06 140425](https://github.com/user-attachments/assets/d7908628-f5ca-4a56-a6b0-8431879f8caa)
 
 ## Step-by-Step Setup Guide
 
